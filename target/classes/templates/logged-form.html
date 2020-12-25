@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Logged In</title>
+</head>
+<body>
+    <h2>You successfully logged in :)</h2>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout" />
+    </form>
+
+    <div sec:authorize="isAuthenticated()"
+        th:object="${loggedCustomer}">
+        Welcome <b><span sec:authentication="name">Username</span></b>
+        &nbsp;
+        <i><span sec:authentication="principal.authorities">Roles</span></i>
+
+        <a th:href="@{/service/is_signed_in/update(customerId=${loggedCustomer.id})}"
+           class="btn btn-info btn-sm">
+            Update
+        </a>
+    </div>
+
+</body>
+
+</html>
