@@ -2,8 +2,10 @@ package pl.jbed.stud.SomeWebService.Service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import pl.jbed.stud.SomeWebService.Entity.Customer;
+import pl.jbed.stud.SomeWebService.Entity.Role;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IService extends UserDetailsService {
 

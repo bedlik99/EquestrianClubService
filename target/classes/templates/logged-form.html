@@ -6,16 +6,24 @@
     <title>Logged In</title>
 </head>
 <body>
-    <h2>You successfully logged in :)</h2>
+
+<div style="text-align: right">
 
     <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Logout" />
+        <input type="submit" value="Logout"/>
     </form>
 
     <div sec:authorize="isAuthenticated()"
-        th:object="${loggedCustomer}">
+         th:object="${loggedCustomer}">
         Welcome <b><span sec:authentication="name">Username</span></b>
-        &nbsp;
+
+
+        <div sec:authorize="hasAuthority('CUSTOMER')">
+            <a th:href="@{/service/loggedIn/showDetails}">Showing the info</a>
+        </div>
+
+
+        <br>
         <i><span sec:authentication="principal.authorities">Roles</span></i>
 
         <a th:href="@{/service/is_signed_in/update(customerId=${loggedCustomer.id})}"
@@ -23,6 +31,9 @@
             Update
         </a>
     </div>
+</div>
+
+    <h2 style="text-align: center;">You successfully logged in :)</h2>
 
 </body>
 

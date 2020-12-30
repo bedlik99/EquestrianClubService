@@ -1,7 +1,7 @@
 package pl.jbed.stud.SomeWebService.Entity;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,39 +28,33 @@ public class Customer {
     @Column(name="email")
     private String email;
 
-    private boolean enabled;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.REFRESH,CascadeType.PERSIST}) //{CascadeType.MERGE, CascadeType.DETACH}
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private List<Role> roles= new ArrayList<>();
+    private List<Role> roles;
 
     public Customer(){
-
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Customer(int id, String firstName, String lastName, String email, String dateOfBirth) {
-        this.id = id;
+    public Customer(String username, String password, String firstName, String lastName, String email) {
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public Customer(String firstName, String lastName, String email, String dateOfBirth) {
+    public Customer(String username, String password, String firstName, String lastName, String email, List<Role> roles) {
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.roles = roles;
     }
 
     public List<Role> getRoles() {
@@ -116,8 +110,9 @@ public class Customer {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
     }
+
 
     @Override
     public String toString() {
