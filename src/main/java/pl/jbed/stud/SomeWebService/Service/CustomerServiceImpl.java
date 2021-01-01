@@ -19,24 +19,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ServiceImpl implements IService {
+public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
-    private final CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private RoleRepo roleRepository;
-
-    @Autowired
-    public ServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
 
     @Override
     public Customer findByUserName(String userName) {
         // check the database if the user already exists
-        return customerRepository.findByUsername(userName);
+        return customerRepository.findByUserName(userName);
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

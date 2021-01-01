@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `username` varchar(50) NOT NULL,
-`password` char(80) NOT NULL,
+`password` varchar(80) NOT NULL,
 `first_name` varchar(50) NOT NULL,
 `last_name` varchar(50) NOT NULL,
 `email` varchar(50) NOT NULL,
@@ -102,4 +102,11 @@ VALUES
 (5, 1),
 (6, 1);
 
+create table if not exists persistent_logins (
+                                                 username varchar(100) not null,
+                                                 series varchar(64) primary key,
+                                                 token varchar(64) not null,
+                                                 last_used timestamp not null
+
+);
 

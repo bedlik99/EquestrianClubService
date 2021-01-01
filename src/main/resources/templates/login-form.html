@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,6 +17,8 @@
     <title>Login Page </title>
 </head>
 <body class="backcolor">
+
+
 
 <div style="width: 125%; margin-left: 250px;margin-block-start: 50px">
 
@@ -63,6 +65,19 @@
 
                     <input type="password" name="password" placeholder="password" class="form-control">
                 </div>
+
+
+                <div style="margin-left: 80%" class="input-group">
+                    <p style="text-align:center;font-family: 'Times New Roman'",Times,serif>
+                        <label th:for="remember-me">Remember me</label>
+                    </p>
+                    <input style="display: inline-flex" type="checkbox" name="remember-me" placeholder="remember-me" class="form-control">
+                </div>
+
+
+
+
+
 
                 <!-- Login/Submit Button -->
                 <div style="margin-top: 10px;margin-left: 13px" class="form-group">

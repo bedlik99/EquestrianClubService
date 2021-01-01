@@ -1,28 +1,41 @@
 <!DOCTYPE HTML>
 
 
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>Front page</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}" />
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet"
+          th:href="@{/css/mineStyles.css}"/>
 </head>
 
 <body style="font-size: 30px" class="backcolor">
 
-   <div style="text-align: right; margin-right: 40px">
-    <p>
+
+<div style="text-align: right; margin-right: 40px">
+
+
+    <div sec:authorize="isAnonymous()">
         <a href="/service/login">Sign in</a><br>
         <a href="/service/register">Register</a>
-    </p>
-   </div>
+    </div>
 
-   <div style="text-align: center">
-       <h1>Welcome again!</h1>
-       <h3>Little boi...</h3>
-  </div>
+</div>
+
+<div style="text-align: center">
+    <h1>Welcome again!</h1>
+    <h3>Little boi...</h3>
+</div>
 
 
 </body>

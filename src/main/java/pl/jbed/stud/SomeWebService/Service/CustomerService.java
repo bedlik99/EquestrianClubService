@@ -7,7 +7,7 @@ import pl.jbed.stud.SomeWebService.Entity.Role;
 import java.util.List;
 import java.util.Optional;
 
-public interface IService extends UserDetailsService {
+public interface CustomerService extends UserDetailsService {
 
     public Customer findByUserName(String userName);
     public Customer getCustomer(int theId);

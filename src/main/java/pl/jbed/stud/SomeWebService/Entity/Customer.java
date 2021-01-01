@@ -2,6 +2,9 @@ package pl.jbed.stud.SomeWebService.Entity;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,11 +16,18 @@ public class Customer {
     @Column(name="id")
     private int id;
 
-    @Column(name="username")
-    private String username;
 
+    @NotBlank(message = " must be filled")
+    @Size(min = 1,message = " is required")
+    @Column(name="username")
+    private String userName;
+
+
+    @NotBlank(message = " must be filled")
+    @Size(min = 1,message = " password is required")
     @Column(name="password")
     private String password;
+
 
     @Column(name="first_name")
     private String firstName;
@@ -40,16 +50,16 @@ public class Customer {
     public Customer(){
     }
 
-    public Customer(String username, String password, String firstName, String lastName, String email) {
-        this.username = username;
+    public Customer(String userName, String password, String firstName, String lastName, String email) {
+        this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public Customer(String username, String password, String firstName, String lastName, String email, List<Role> roles) {
-        this.username = username;
+    public Customer(String userName, String password, String firstName, String lastName, String email, List<Role> roles) {
+        this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -98,11 +108,11 @@ public class Customer {
     }
 
     public String getUserName() {
-        return username;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        this.username = userName;
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -110,7 +120,16 @@ public class Customer {
     }
 
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
+        if(password.isBlank()){
+            this.password=null;
+        }else{
+            this.password = new BCryptPasswordEncoder().encode(password);
+        }
+
+    }
+
+    public void clearPassBeforePopulatingForm(){
+        this.password=null;
     }
 
 

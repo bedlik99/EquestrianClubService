@@ -9,7 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.jbed.stud.SomeWebService.Service.IService;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import pl.jbed.stud.SomeWebService.Service.CustomerService;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -17,12 +21,24 @@ import pl.jbed.stud.SomeWebService.Service.IService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private IService service;
+    private CustomerService service;
+
+    @Autowired
+    private DataSource dataSource;
+
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
+
 
     /**
      * Spring's Security DaoAuthenticationProvider is a simple authentication provider
@@ -42,25 +58,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) {
 
         auth.authenticationProvider(authenticationProvider());
-
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
         http.authorizeRequests()
                 .antMatchers("/service/login").authenticated()
+                .antMatchers("/service/logged").authenticated()
+                .antMatchers("/service/logged/*").authenticated()
+                .and()
+                .rememberMe().tokenRepository(persistentTokenRepository())
+                .rememberMeParameter("remember-me")
+                .useSecureCookie(true)
                 .and()
                 .formLogin()
                 .loginPage("/service/login")
                 .loginProcessingUrl("/authenticateUser")
                 .defaultSuccessUrl("/service/logged", true)
-                .failureUrl("/403")
                 .permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().deleteCookies("JSESSIONID").permitAll();
+
 
     }
+
+
 
 
 }

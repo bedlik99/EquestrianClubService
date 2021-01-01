@@ -1,11 +1,18 @@
 package pl.jbed.stud.SomeWebService.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.jbed.stud.SomeWebService.Entity.Customer;
-import pl.jbed.stud.SomeWebService.Service.IService;
+import pl.jbed.stud.SomeWebService.Service.CustomerService;
+
+import javax.validation.Valid;
 
 /**
  * UWAGA SPRAWDZ CZY BAZA DANYCH BEZ KROTKI ENABLED BEDZIE DZIALAC --> BĘDZIE :) !
@@ -15,21 +22,24 @@ import pl.jbed.stud.SomeWebService.Service.IService;
 public class MainController {
 
     @Autowired
-    private IService customerService;
-
-    public MainController(IService theCustomerService) {
-        this.customerService = theCustomerService;
-    }
+    private CustomerService customerService;
 
 
     @GetMapping("/greeting")
     public String frontPage(){
+
+        if(isAuthenticated()){
+            return "redirect:/service/logged";
+        }
 
         return "front-page";
     }
 
     @GetMapping("/register")
     public String registerForm(Model theModel){
+        if(isAuthenticated()){
+            return "redirect:/service/logged";
+        }
 
         Customer customer = new Customer();
         theModel.addAttribute("theCustomer", customer);
@@ -40,24 +50,31 @@ public class MainController {
 
     @GetMapping("/login")
     public String loginForm(){
+        if(isAuthenticated()){
+            return "redirect:/service/logged";
+        }
 
         return "login-form";
     }
 
     @PostMapping("/save")
-    public String saveCustomerData(@ModelAttribute("newCustomer") Customer theCustomer){
+    public String saveCustomerData(@Valid @ModelAttribute("theCustomer") Customer theCustomer,
+                                   BindingResult bindingResult){
 
-        customerService.save(theCustomer);
+        if(bindingResult.hasErrors()){
+            theCustomer.clearPassBeforePopulatingForm();
 
-        return "redirect:/service/greeting";
+            return "register-form";
+
+        }else{
+            customerService.save(theCustomer);
+
+            return "redirect:/service/greeting";
+        }
+
+
     }
 
-
-    @GetMapping("/loggedIn/showDetails")
-    public String showCustomerInfo(){
-
-        return "customer-form";
-    }
 
 
     @GetMapping("/delete/{id}")
@@ -69,4 +86,11 @@ public class MainController {
     }
 
 
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+        return authentication.isAuthenticated();
+    }
 }

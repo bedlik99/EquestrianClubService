@@ -12,7 +12,7 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}" />
+          th:href="@{/css/mineStyles.css}"/>
 
     <title>Register</title>
 </head>
@@ -20,7 +20,13 @@
 
 <div class="container" th:class="leftTop">
 
+    <div style="text-align: right; margin-right: 20px">
 
+        <form th:action="@{/logout}" method="post">
+            <input class="btn btn-success" type="submit" value="Logout"/>
+        </form>
+
+    </div>
     <h1 style="text-align: center">Updating Data</h1>
     <hr>
 
@@ -28,10 +34,10 @@
 
     <div style="margin-left: 40%">
         <form action="#" th:action="@{/service/save}"
-              th:object="${theCustomer}" method="post" >
+              th:object="${theCustomer}" method="post">
 
             <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{id}"/>
 
             <input type="text" th:field="*{userName}"
                    class="form-control mb-4 col-4" placeholder="Username">
@@ -58,9 +64,8 @@
 
     <div style="text-align: center">
         <hr>
-        <a  th:href="@{/service/logged}">Go Back</a>
+        <a th:href="@{/service/logged}">Go Back</a>
     </div>
-
 
 
 </div>
