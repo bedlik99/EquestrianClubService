@@ -24,26 +24,6 @@
 
 <div style="text-align: right; margin-right: 40px">
 
-<!--    <div sec:authorize="isAuthenticated()">-->
-<!--        <form th:action="@{/logout}" method="post">-->
-<!--            <input class="btn btn-success" type="submit" value="Logout"/>-->
-<!--        </form>-->
-
-<!--        <br>-->
-<!--        <i><span sec:authentication="principal.authorities">Roles</span></i>:-->
-<!--        <b><span sec:authentication="name">Username</span></b>-->
-<!--        <br>-->
-
-<!--        <br>-->
-
-<!--        <div style="margin-top: 5px;" sec:authorize="hasAuthority('CUSTOMER')">-->
-<!--            <form th:action="@{/service/logged/showDetails}">-->
-<!--                <input class="btn btn-primary" type="submit" value="Show new info"/>-->
-
-<!--            </form>-->
-<!--        </div>-->
-
-<!--    </div>-->
 
     <div sec:authorize="isAnonymous()">
         <a href="/service/login">Sign in</a><br>
