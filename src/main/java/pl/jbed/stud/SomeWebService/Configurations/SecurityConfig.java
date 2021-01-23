@@ -12,20 +12,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import pl.jbed.stud.SomeWebService.Service.CustomerService;
-
 import javax.sql.DataSource;
-
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     private CustomerService service;
-
-    @Autowired
     private DataSource dataSource;
 
+
+    @Autowired
+    public SecurityConfig(CustomerService service, DataSource dataSource) {
+        this.service = service;
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -63,7 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-
         http.authorizeRequests()
                 .antMatchers("/service/login").authenticated()
                 .antMatchers("/service/logged").authenticated()
@@ -81,9 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().deleteCookies("JSESSIONID").permitAll();
 
-
     }
-
 
 
 

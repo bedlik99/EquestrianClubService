@@ -21,12 +21,14 @@ import java.util.stream.Collectors;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
     private CustomerRepository customerRepository;
-
-    @Autowired
     private RoleRepo roleRepository;
 
+    @Autowired
+    public CustomerServiceImpl(CustomerRepository customerRepository, RoleRepo roleRepository) {
+        this.customerRepository = customerRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public Customer findByUserName(String userName) {

@@ -4,17 +4,16 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import pl.jbed.stud.SomeWebService.Entity.Role;
 
 import javax.persistence.EntityManager;
-
 
 @Repository
 public class RoleDAOImpl implements RoleRepo {
 
     @Autowired
     private EntityManager entityManager;
+
 
     @Override
     public Role findRoleByName(String roleName) {

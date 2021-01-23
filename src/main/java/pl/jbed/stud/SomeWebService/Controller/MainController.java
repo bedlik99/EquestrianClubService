@@ -21,9 +21,13 @@ import javax.validation.Valid;
 @RequestMapping("/service")
 public class MainController {
 
-    @Autowired
     private CustomerService customerService;
 
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping("/greeting")
     public String frontPage(){
@@ -74,7 +78,6 @@ public class MainController {
 
 
     }
-
 
 
     @GetMapping("/delete/{id}")

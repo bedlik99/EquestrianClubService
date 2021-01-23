@@ -15,9 +15,9 @@ import pl.jbed.stud.SomeWebService.Service.CustomerService;
 @RequestMapping("/service")
 public class LoginController {
 
-    @Autowired
     private CustomerService service;
 
+    @Autowired
     public LoginController(CustomerService service) {
         this.service = service;
     }
@@ -43,7 +43,6 @@ public class LoginController {
 
         return "logged-form";
     }
-
 
 
     @GetMapping("/logged/update")
