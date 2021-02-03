@@ -15,41 +15,49 @@
 
     <link rel="stylesheet"
           th:href="@{/css/mineStyles.css}" />
+    
 </head>
 <body class="backcolor">
 
-<div style="text-align: right;margin-right: 20px" >
 
-    <form th:action="@{/logout}" method="post">
-        <input class="btn btn-success" type="submit" value="Logout"/>
-    </form>
-    <br>
+<div>
 
-    <div sec:authorize="isAuthenticated()"
-         th:object="${loggedCustomer}">
+          <div style="font-family: 'Times New Roman';font-size: 15px;display: inline-block">
+                <span sec:authentication="principal.authorities">Role</span>:
+                <b><span sec:authentication="name">Username</span></b>
+          </div>
 
+        <div style="margin-right: 20px;text-align: right">
+            <form th:action="@{/logout}" method="post">
+                <input style="margin-top: 5px" class="btn btn-success" type="submit" value="Logout"/>
+            </form>
+        </div>
 
-        <i><span sec:authentication="principal.authorities">Roles</span></i>:
-        <b><span sec:authentication="name">Username</span></b>
+        <div style="text-align: right;margin-right: 20px">
+            <br>
+            <a th:href="@{/service/logged/update(customerId=${loggedCustomer.id})}">
+                <input class="btn btn-primary" type="submit" value="Update Profile"/>
+            </a>
+        </div>
+
         <br>
+        <div style="margin-left: 37%;text-align: center">
+            <p style="border: 3px solid black;font-size: 30px;font-family: 'Times New Roman';max-width: 400px">
+                Hi <span sec:authentication="name">Username</span>!<br>
+                Here is your main page!
+            </p>
+        </div>
 
-
-        <a th:href="@{/service/logged/update(customerId=${loggedCustomer.id})}">
-            <input class="btn btn-primary" type="submit" value="Update Profile"/>
-        </a>
-
-
-        <div style="margin-top: 5px;" sec:authorize="hasAuthority('CUSTOMER')">
+        <div style="text-align: center" sec:authorize="hasAuthority('CUSTOMER')">
             <form th:action="@{/service/logged/showDetails}">
-                <input class="btn btn-primary" type="submit" value="Show new info"/>
+                <input class="btn btn-info" type="submit" value="Take your results"/>
 
             </form>
         </div>
 
-    </div>
 </div>
 
-    <h2 style="text-align: center;">You successfully logged in :)</h2>
+
 
 </body>
 

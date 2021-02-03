@@ -21,7 +21,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomerService service;
     private DataSource dataSource;
 
-
     @Autowired
     public SecurityConfig(CustomerService service, DataSource dataSource) {
         this.service = service;
@@ -79,11 +78,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/service/logged", true)
                 .permitAll()
                 .and()
-                .logout().deleteCookies("JSESSIONID").permitAll();
+                .logout().permitAll();
 
     }
-
-
 
 }
 

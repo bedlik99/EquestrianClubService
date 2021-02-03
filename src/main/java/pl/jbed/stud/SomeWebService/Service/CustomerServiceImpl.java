@@ -11,7 +11,6 @@ import pl.jbed.stud.SomeWebService.DAO.CustomerRepository;
 import pl.jbed.stud.SomeWebService.DAO.RoleRepo;
 import pl.jbed.stud.SomeWebService.Entity.Customer;
 import pl.jbed.stud.SomeWebService.Entity.Role;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

@@ -15,7 +15,6 @@ public class Customer {
     @Column(name="id")
     private int id;
 
-
     @NotBlank(message = " must be filled")
     @Size(min = 1,message = " is required")
     @Column(name="username")

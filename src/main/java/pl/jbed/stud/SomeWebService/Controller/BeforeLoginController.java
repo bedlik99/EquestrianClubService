@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.jbed.stud.SomeWebService.Entity.Customer;
 import pl.jbed.stud.SomeWebService.Service.CustomerService;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping("/service")
-public class MainController {
+public class BeforeLoginController {
 
     private CustomerService customerService;
 
@@ -61,6 +61,46 @@ public class MainController {
         return "login-form";
     }
 
+    @GetMapping("/logged/showDetails")
+    public String showCustomerInfo(){
+
+        return "customer-form";
+    }
+
+
+    @GetMapping("/logged")
+    public String loggedIn(Model theModel){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if(principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+        }else{
+            username = principal.toString();
+        }
+
+        Customer theCustomer = customerService.findByUserName(username);
+        theModel.addAttribute("loggedCustomer",theCustomer);
+
+        return "logged-form";
+    }
+
+
+    @GetMapping("/logged/update")
+    public String updateData(@RequestParam("customerId") int theId,
+                             Model theModel){
+
+        // get the employee from the service
+        Customer theCustomer = customerService.getCustomer(theId);
+
+        theCustomer.clearPassBeforePopulatingForm();
+        // set employee as a model attribute to pre-populate the form
+        theModel.addAttribute("theCustomer",theCustomer);
+
+        return "update-form";
+    }
+
+
+
     @PostMapping("/save")
     public String saveCustomerData(@Valid @ModelAttribute("theCustomer") Customer theCustomer,
                                    BindingResult bindingResult){
@@ -75,7 +115,6 @@ public class MainController {
 
             return "redirect:/service/greeting";
         }
-
 
     }
 
