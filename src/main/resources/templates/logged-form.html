@@ -15,15 +15,17 @@
 
     <link rel="stylesheet"
           th:href="@{/css/mineStyles.css}" />
-    
+
 </head>
 <body class="backcolor">
 
 
 <div>
 
-          <div style="font-family: 'Times New Roman';font-size: 15px;display: inline-block">
-                <span sec:authentication="principal.authorities">Role</span>:
+          <div style="font-family: 'Times New Roman';font-size: 16px;
+          margin-left: 90%;margin-right: 5px;margin-top: 2px;text-align: center;
+            border: 2px solid black;background-color: greenyellow">
+                <span>Logged in user:</span>
                 <b><span sec:authentication="name">Username</span></b>
           </div>
 
@@ -33,8 +35,8 @@
             </form>
         </div>
 
-        <div style="text-align: right;margin-right: 20px">
-            <br>
+        <div style="text-align: right;margin-right: 20px;margin-top: 5px">
+
             <a th:href="@{/service/logged/update(customerId=${loggedCustomer.id})}">
                 <input class="btn btn-primary" type="submit" value="Update Profile"/>
             </a>

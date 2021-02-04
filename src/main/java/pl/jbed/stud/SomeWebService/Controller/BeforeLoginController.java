@@ -30,21 +30,19 @@ public class BeforeLoginController {
     }
 
     @GetMapping("/greeting")
-    public String frontPage(){
+    public String frontPage() {
 
-        if(isAuthenticated()){
+        if (isAuthenticated()) {
             return "redirect:/service/logged";
         }
-
         return "front-page";
     }
 
     @GetMapping("/register")
-    public String registerForm(Model theModel){
-        if(isAuthenticated()){
+    public String registerForm(Model theModel) {
+        if (isAuthenticated()) {
             return "redirect:/service/logged";
         }
-
         Customer customer = new Customer();
         theModel.addAttribute("theCustomer", customer);
 
@@ -53,66 +51,56 @@ public class BeforeLoginController {
 
 
     @GetMapping("/login")
-    public String loginForm(){
-        if(isAuthenticated()){
+    public String loginForm() {
+        if (isAuthenticated()) {
             return "redirect:/service/logged";
         }
-
         return "login-form";
     }
 
     @GetMapping("/logged/showDetails")
-    public String showCustomerInfo(){
+    public String showCustomerInfo() {
 
         return "customer-form";
     }
 
-
     @GetMapping("/logged")
-    public String loggedIn(Model theModel){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if(principal instanceof UserDetails){
-            username = ((UserDetails)principal).getUsername();
-        }else{
-            username = principal.toString();
-        }
+    public String loggedIn(Model theModel) {
 
-        Customer theCustomer = customerService.findByUserName(username);
-        theModel.addAttribute("loggedCustomer",theCustomer);
+        Customer theCustomer = getLoggedCustomer();
+        theModel.addAttribute("loggedCustomer", theCustomer);
 
         return "logged-form";
     }
-
 
     @GetMapping("/logged/update")
     public String updateData(@RequestParam("customerId") int theId,
                              Model theModel){
 
+        Customer loggedCustomer = getLoggedCustomer();
         // get the employee from the service
         Customer theCustomer = customerService.getCustomer(theId);
 
-        theCustomer.clearPassBeforePopulatingForm();
-        // set employee as a model attribute to pre-populate the form
-        theModel.addAttribute("theCustomer",theCustomer);
+        if(loggedCustomer.getId()==theCustomer.getId()){
+            theCustomer.clearPassBeforePopulatingForm();
+            // set employee as a model attribute to pre-populate the form
+            theModel.addAttribute("theCustomer",theCustomer);
+            return "update-form";
+        }else{
+            return "redirect:/service/logged";
+        }
 
-        return "update-form";
     }
-
 
 
     @PostMapping("/save")
     public String saveCustomerData(@Valid @ModelAttribute("theCustomer") Customer theCustomer,
-                                   BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             theCustomer.clearPassBeforePopulatingForm();
-
             return "register-form";
-
-        }else{
+        } else {
             customerService.save(theCustomer);
-
             return "redirect:/service/greeting";
         }
 
@@ -120,11 +108,25 @@ public class BeforeLoginController {
 
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") int theId){
+    public String deleteUser(@PathVariable("id") int theId) {
 
         customerService.deleteCustomer(theId);
 
         return "redirect:/service/greeting";
+    }
+
+
+    private Customer getLoggedCustomer(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if(principal instanceof UserDetails){
+            username = ((UserDetails)principal).getUsername();
+        }else{
+            username = principal.toString();
+        }
+        Customer loggedCustomer = customerService.findByUserName(username);
+
+        return loggedCustomer;
     }
 
 
@@ -135,4 +137,5 @@ public class BeforeLoginController {
         }
         return authentication.isAuthenticated();
     }
+
 }
