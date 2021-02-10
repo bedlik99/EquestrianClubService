@@ -1,0 +1,14 @@
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Service\UserService.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Configurations\SecurityConfig.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Service\UserServiceImpl.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\DAO\CustomerRepository.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\SomeWebServiceApplication.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\DAO\RoleDAOImpl.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Controller\BeforeLoginController.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Entity\Role.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Entity\User.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\DAO\UserCodeRepository.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\DAO\UserCodeDAOImpl.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Controller\ReactRestController.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\Entity\UserCode.java
+D:\Projekty_Java\CustomerService\src\main\java\pl\jbed\stud\SomeWebService\DAO\RoleRepo.java

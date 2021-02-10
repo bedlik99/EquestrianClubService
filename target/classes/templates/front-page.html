@@ -5,7 +5,7 @@
 
 <head>
     <title>Front page</title>
-
+<!-- DLA index.html    <meta http-equiv="refresh" content="0; URL='service/greeting'" />     -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
@@ -16,7 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}"/>
+          th:href="@{/css/main.css}"/>
 </head>
 
 <body style="font-size: 30px" class="backcolor">
@@ -24,15 +24,13 @@
 
 <div style="text-align: right; margin-right: 20px">
 
-
     <div sec:authorize="isAnonymous()" style="font-size: 25px;font-family: Verdana;">
-        <b><a href="/service/login">Sign in</a><br>
-        <a href="/service/register">Register</a></b>
-
+        <b><a href="/login">Sign in</a><br>
+        <a href="/register">Register</a></b>
     </div>
 
-</div>
 
+</div>
 
 <div style="text-align: center">
     <h1>Welcome! </h1>

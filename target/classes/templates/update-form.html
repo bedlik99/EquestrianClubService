@@ -12,7 +12,7 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}"/>
+          th:href="@{/css/main.css}"/>
 
     <title>Register</title>
 </head>
@@ -33,8 +33,8 @@
     <p style="text-align: center" class="h4 mb-4"><strong>Change your account data</strong></p>
 
     <div style="margin-left: 40%">
-        <form action="#" th:action="@{/service/save}"
-              th:object="${theCustomer}" method="post">
+        <form action="#" th:action="@{/save}"
+              th:object="${theUser}" method="post">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}"/>
@@ -64,7 +64,7 @@
 
     <div style="text-align: center">
         <hr>
-        <a th:href="@{/service/logged}">Go Back</a>
+        <a th:href="@{/logged}">Go Back</a>
     </div>
 
 

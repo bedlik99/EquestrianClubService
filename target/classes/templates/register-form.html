@@ -12,7 +12,7 @@
           crossorigin="anonymous">
 
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}" />
+          th:href="@{/css/main.css}"/>
 
     <title>Register</title>
 </head>
@@ -27,10 +27,10 @@
     <p style="text-align: center" class="h4 mb-4"><strong>Create Account</strong></p>
 
     <div style="margin-left: 40%">
-        <form action="#" th:action="@{/service/save}" th:object="${theCustomer}" method="POST" >
+        <form action="#" th:action="@{/save}" th:object="${theUser}" method="POST">
 
             <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{id}"/>
 
 
             <input type="text" th:field="*{userName}"
@@ -39,7 +39,7 @@
             <div th:if="${#fields.hasErrors('userName')}"
                  style="margin-bottom: 25px;display: inline" class="text-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}" ></li>
+                    <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"></li>
                 </ul>
             </div>
 
@@ -50,7 +50,7 @@
             <div th:if="${#fields.hasErrors('password')}"
                  style="margin-bottom: 25px" class="text-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}" ></li>
+                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"></li>
                 </ul>
             </div>
 
@@ -74,9 +74,8 @@
 
     <div style="text-align: center">
         <hr>
-        <a  th:href="@{/service/greeting}">Back to Front Page</a>
+        <a th:href="@{/greeting}">Back to Front Page</a>
     </div>
-
 
 
 </div>

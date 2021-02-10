@@ -16,6 +16,7 @@ CREATE TABLE `user` (
 `first_name` varchar(50) NOT NULL,
 `last_name` varchar(50) NOT NULL,
 `email` varchar(50) NOT NULL,
+UNIQUE KEY `PRIVATE_NAME` (`username`),
 PRIMARY KEY (`id`)
 
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -35,10 +36,12 @@ VALUES
 ('john','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','John','Doe','john@luv2code.com'),
 ('mary','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','Mary','Public','mary@luv2code.com'),
 ('susan','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','Susan','Adams','susan@luv2code.com'),
-
 ('rafix', '$2a$10$/RyWIXF266CNf9EWEbLjsefeY/UC6/3m0ZOP.ueJM1/uIgW/vxEJW', 'Rafal', 'Trocki', 'troc.raf@pmail.com'),
 ('kasia', '$2a$10$WDTsv4TiKAQb68Tk6Oy64eH6HmN647vM40KCoLIUBeWu.mOJSSX6G', 'Katarzyna', 'Wielka', 'wielka.kat@op.com'),
-('wik', '$2a$10$ULgUuPc3WBDNVuBjvucuG.ubPpJOIcQigvJaGa0OUSjkY.pE5cTqq', 'Wiktor', 'Grocz', 'grocz.tor@re.de');
+('wik', '$2a$10$ULgUuPc3WBDNVuBjvucuG.ubPpJOIcQigvJaGa0OUSjkY.pE5cTqq', 'Wiktor', 'Grocz', 'grocz.tor@re.de'),
+('marek', '$2a$10$hIHDq7f7wvmVbr3I/Oagzuj4dlw1Ace9AXY2HwbyPMWWQehdRplDy', 'Marek', 'Kielek', 'kiel.mar@u2.com'),
+('pete', '$2a$10$e2vcdVACBLY.epILku9GleWMumHBDFI44hP2bWN.rdZ3UWYrhyuAK', 'Pete', 'Parker', 'par.pete@po.mail.com'),
+('klysz', '$2a$10$dkUCHWJ/5Z0K0PAwM6AS7.R608jQtP69U6RmqVQIcIM2d3B1Ns.dK', 'Jakub', 'Klysz', 'kl.kub@tugmail.dk');
 
 
 --
@@ -100,7 +103,10 @@ VALUES
 (3, 3),
 (4, 1),
 (5, 1),
-(6, 1);
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1);
 
 create table if not exists persistent_logins (
                                                  username varchar(100) not null,

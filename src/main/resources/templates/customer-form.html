@@ -3,11 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Customer authorized</title>
-
-    <meta charset="UTF-8">
+    <title>ReactJS + Spring Data REST</title>
     <title>Logged In</title>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
@@ -18,15 +15,14 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet"
-          th:href="@{/css/mineStyles.css}" />
+          th:href="@{/css/main.css}"/>
 </head>
 
 <body class="backcolor">
 
 <form style="text-align: right;margin-top: 5px;margin-right: 5px" th:action="@{/logout}" method="post">
-    <input class="btn btn-success" type="submit" value="Logout" />
+    <input class="btn btn-success"  type="submit" value="Logout"/>
 </form>
-
 <h2 style="text-align: center">This is single-page using React.</h2>
 
 

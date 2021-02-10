@@ -11,18 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import pl.jbed.stud.SomeWebService.Service.CustomerService;
+import pl.jbed.stud.SomeWebService.Service.UserService;
 import javax.sql.DataSource;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private CustomerService service;
+    private UserService service;
     private DataSource dataSource;
 
     @Autowired
-    public SecurityConfig(CustomerService service, DataSource dataSource) {
+    public SecurityConfig(UserService service, DataSource dataSource) {
         this.service = service;
         this.dataSource = dataSource;
     }
@@ -56,7 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -64,22 +64,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/service/login").authenticated()
-                .antMatchers("/service/logged").authenticated()
-                .antMatchers("/service/logged/*").authenticated()
+                .antMatchers("/login").authenticated()
+                .antMatchers("/logged").authenticated()
+                .antMatchers("/logged/*").authenticated()
                 .and()
                 .rememberMe().tokenRepository(persistentTokenRepository())
                 .rememberMeParameter("remember-me")
                 .useSecureCookie(true)
                 .and()
                 .formLogin()
-                .loginPage("/service/login")
+                .loginPage("/login")
                 .loginProcessingUrl("/authenticateUser")
-                .defaultSuccessUrl("/service/logged", true)
+                .defaultSuccessUrl("/logged", true)
                 .permitAll()
                 .and()
                 .logout().permitAll();
-
     }
 
 }

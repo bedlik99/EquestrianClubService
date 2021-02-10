@@ -1,5 +1,6 @@
 package pl.jbed.stud.SomeWebService.Controller;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -9,31 +10,41 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.jbed.stud.SomeWebService.Entity.Customer;
-import pl.jbed.stud.SomeWebService.Service.CustomerService;
+import pl.jbed.stud.SomeWebService.Entity.User;
+import pl.jbed.stud.SomeWebService.Entity.UserCode;
+import pl.jbed.stud.SomeWebService.Service.UserService;
 
 import javax.validation.Valid;
 
 /**
  * UWAGA SPRAWDZ CZY BAZA DANYCH BEZ KROTKI ENABLED BEDZIE DZIALAC --> BĘDZIE :) !
  */
+
 @Controller
-@RequestMapping("/service")
 public class BeforeLoginController {
 
-    private CustomerService customerService;
-
+    private final static String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
+    private UserService userService;
 
     @Autowired
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
+    public void setCustomerService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @RequestMapping(value = "/")
+    public String showReactPage() {
+        if (isAuthenticated()) {
+            return "redirect:/logged";
+        } else {
+            return "redirect:/greeting";
+        }
     }
 
     @GetMapping("/greeting")
     public String frontPage() {
 
         if (isAuthenticated()) {
-            return "redirect:/service/logged";
+            return "redirect:/logged";
         }
         return "front-page";
     }
@@ -41,92 +52,105 @@ public class BeforeLoginController {
     @GetMapping("/register")
     public String registerForm(Model theModel) {
         if (isAuthenticated()) {
-            return "redirect:/service/logged";
+            return "redirect:/logged";
         }
-        Customer customer = new Customer();
-        theModel.addAttribute("theCustomer", customer);
+        User user = new User();
+        theModel.addAttribute("theUser", user);
 
         return "register-form";
     }
 
-
     @GetMapping("/login")
     public String loginForm() {
         if (isAuthenticated()) {
-            return "redirect:/service/logged";
+            return "redirect:/logged";
         }
         return "login-form";
-    }
-
-    @GetMapping("/logged/showDetails")
-    public String showCustomerInfo() {
-
-        return "customer-form";
     }
 
     @GetMapping("/logged")
     public String loggedIn(Model theModel) {
 
-        Customer theCustomer = getLoggedCustomer();
-        theModel.addAttribute("loggedCustomer", theCustomer);
+        User theUser = getLoggedUser();
+        UserCode theCode = userService.findCodeById(theUser.getId());
+
+        if(theCode.getInviteCode() == null){
+            theCode.setInviteCode(generateCode());
+            userService.updateUserCode(theCode);
+        }
+
+        theModel.addAttribute("loggedUser", theUser);
+        theModel.addAttribute("loggedUserCode", theCode);
 
         return "logged-form";
     }
 
+    @GetMapping("/logged/details")
+    public String showCustomerInfo() {
+
+        if (isAuthenticated()) {
+            return "redirect://localhost:3000";
+        } else {
+            return "redirect:/greeting";
+        }
+
+    }
+
     @GetMapping("/logged/update")
-    public String updateData(@RequestParam("customerId") int theId,
-                             Model theModel){
+    public String updateData(@RequestParam("userId") int theId,
+                             Model theModel) {
 
-        Customer loggedCustomer = getLoggedCustomer();
-        // get the employee from the service
-        Customer theCustomer = customerService.getCustomer(theId);
+        User loggedUser = getLoggedUser();
+        User theUser = userService.getUser(theId);
 
-        if(loggedCustomer.getId()==theCustomer.getId()){
-            theCustomer.clearPassBeforePopulatingForm();
+        if (loggedUser.getId() == theUser.getId()) {
+            theUser.clearPassBeforePopulatingForm();
             // set employee as a model attribute to pre-populate the form
-            theModel.addAttribute("theCustomer",theCustomer);
+            theModel.addAttribute("theUser", theUser);
             return "update-form";
-        }else{
-            return "redirect:/service/logged";
+        } else {
+            return "redirect:/logged";
         }
 
     }
 
 
     @PostMapping("/save")
-    public String saveCustomerData(@Valid @ModelAttribute("theCustomer") Customer theCustomer,
+    public String saveCustomerData(@Valid @ModelAttribute("theUser") User theUser,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            theCustomer.clearPassBeforePopulatingForm();
+            theUser.clearPassBeforePopulatingForm();
             return "register-form";
         } else {
-            customerService.save(theCustomer);
-            return "redirect:/service/greeting";
+            userService.addFieldForUserCode();
+            userService.saveUser(theUser);
+            return "redirect:/greeting";
         }
-
     }
-
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") int theId) {
+        userService.deleteUserRole(theId);
+        userService.deleteUser(theId);
 
-        customerService.deleteCustomer(theId);
-
-        return "redirect:/service/greeting";
+        return "redirect:/greeting";
     }
 
 
-    private Customer getLoggedCustomer(){
+    private String generateCode() {
+        return RandomStringUtils.random(6, characters);
+    }
+
+    private User getLoggedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
-        if(principal instanceof UserDetails){
-            username = ((UserDetails)principal).getUsername();
-        }else{
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
             username = principal.toString();
         }
-        Customer loggedCustomer = customerService.findByUserName(username);
 
-        return loggedCustomer;
+        return userService.findByUserName(username);
     }
 
 
