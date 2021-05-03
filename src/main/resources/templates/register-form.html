@@ -27,7 +27,7 @@
     <p style="text-align: center" class="h4 mb-4"><strong>Create Account</strong></p>
 
     <div style="margin-left: 40%">
-        <form action="#" th:action="@{/save}" th:object="${theUser}" method="POST">
+        <form action="#" th:action="@{/saveOrUpdate}" th:object="${theUser}" method="POST">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}"/>
@@ -39,7 +39,7 @@
             <div th:if="${#fields.hasErrors('userName')}"
                  style="margin-bottom: 25px;display: inline" class="text-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('userName')}" th:text="'User name ' + ${err}"></li>
+                    <li th:each="err1 : ${#fields.errors('userName')}" th:text="'User name ' + ${err1}"></li>
                 </ul>
             </div>
 
@@ -50,7 +50,7 @@
             <div th:if="${#fields.hasErrors('password')}"
                  style="margin-bottom: 25px" class="text-danger">
                 <ul>
-                    <li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}"></li>
+                    <li th:each="err2 : ${#fields.errors('password')}" th:text="'Password ' + ${err2}"></li>
                 </ul>
             </div>
 
@@ -64,7 +64,9 @@
             <input type="text" th:field="*{email}"
                    class="form-control mb-4 col-4" placeholder="Email">
 
-            <button style="margin-left: 80px" type="submit" class="btn btn-info col-2">Save</button>
+            <button style="margin-left: 80px" type="submit" class="btn btn-info col-2">
+                Save
+            </button>
 
         </form>
 

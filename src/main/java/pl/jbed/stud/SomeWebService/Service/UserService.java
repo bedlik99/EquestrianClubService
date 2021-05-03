@@ -1,10 +1,12 @@
 package pl.jbed.stud.SomeWebService.Service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 import pl.jbed.stud.SomeWebService.Entity.User;
 import pl.jbed.stud.SomeWebService.Entity.UserCode;
 
 import java.util.List;
+
 
 public interface UserService extends UserDetailsService {
 
@@ -15,6 +17,7 @@ public interface UserService extends UserDetailsService {
     public void deleteUser(int theId);
     public void deleteUserRole(int theId);
     public void saveUser(User user);
-    public void addFieldForUserCode();
+    public void addFieldForUserCode(User user);
     public void updateUserCode(UserCode userCode);
+    public void clearUserCodeAfterLogout(String username);
 }

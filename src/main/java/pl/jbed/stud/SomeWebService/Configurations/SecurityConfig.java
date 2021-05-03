@@ -3,14 +3,17 @@ package pl.jbed.stud.SomeWebService.Configurations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import pl.jbed.stud.SomeWebService.Handler.CustomLogoutSuccessHandler;
 import pl.jbed.stud.SomeWebService.Service.UserService;
 import javax.sql.DataSource;
 
@@ -33,14 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
-        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-        db.setDataSource(dataSource);
-        return db;
-    }
-
-
     /**
      * Spring's Security DaoAuthenticationProvider is a simple authentication provider
      * that uses a Data Access Object (DAO) to retrieve user information from a relational database.
@@ -53,6 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
     }
 
     @Override
@@ -68,30 +68,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/logged").authenticated()
                 .antMatchers("/logged/*").authenticated()
                 .and()
-                .rememberMe().tokenRepository(persistentTokenRepository())
-                .rememberMeParameter("remember-me")
-                .useSecureCookie(true)
-                .and()
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticateUser")
                 .defaultSuccessUrl("/logged", true)
+                .failureForwardUrl("/") // need new page with error
                 .permitAll()
                 .and()
-                .logout().permitAll();
+                .logout()
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll();
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

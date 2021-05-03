@@ -17,8 +17,11 @@ CREATE TABLE `user` (
 `last_name` varchar(50) NOT NULL,
 `email` varchar(50) NOT NULL,
 UNIQUE KEY `PRIVATE_NAME` (`username`),
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
 
+CONSTRAINT `FK_USER_ID` foreign key (`id`) references `user_code` (`user_id`) 
+ON DELETE NO ACTION ON UPDATE NO ACTION
+    
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 --
@@ -108,11 +111,10 @@ VALUES
 (8, 1),
 (9, 1);
 
-create table if not exists persistent_logins (
-                                                 username varchar(100) not null,
-                                                 series varchar(64) primary key,
-                                                 token varchar(64) not null,
-                                                 last_used timestamp not null
-
-);
+-- create table if not exists persistent_logins (
+--                                                  username varchar(100) not null,
+--                                                  series varchar(64) primary key,
+--                                                  token varchar(64) not null,
+--                                                  last_used timestamp not null
+-- );
 

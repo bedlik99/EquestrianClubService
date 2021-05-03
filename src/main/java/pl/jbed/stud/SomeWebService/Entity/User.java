@@ -1,8 +1,8 @@
 package pl.jbed.stud.SomeWebService.Entity;
 
-import org.hibernate.annotations.SQLInsert;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -16,17 +16,15 @@ public class User {
     @Column(name="id")
     private int id;
 
-    @NotBlank(message = " must be filled")
-    @Size(min = 1,message = " is required")
+    @Size(min = 4,message = " length must be at least 4 symbols")
+    @NotBlank(message = " can not be blank")
     @Column(name="username")
     private String userName;
 
-
-    @NotBlank(message = " must be filled")
-    @Size(min = 1,message = " password is required")
+    @Size(min = 4,message = " length must be at least 4 symbols")
+    @NotBlank(message = " can not be blank")
     @Column(name="password")
     private String password;
-
 
     @Column(name="first_name")
     private String firstName;
@@ -71,7 +69,6 @@ public class User {
         this.roles = roles;
     }
 
-
     public UserCode getUserCode() {
         return userCode;
     }
@@ -101,7 +98,7 @@ public class User {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstName = firstName.trim();
     }
 
     public String getLastName() {
@@ -109,7 +106,7 @@ public class User {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastName = lastName.trim();
     }
 
     public String getEmail() {
@@ -117,7 +114,7 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.trim();
     }
 
     public String getUserName() {
@@ -125,7 +122,7 @@ public class User {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.userName = userName.trim();
     }
 
     public String getPassword() {
@@ -133,16 +130,15 @@ public class User {
     }
 
     public void setPassword(String password) {
-        if(password.isBlank()){
-            this.password=null;
+        if(password.isBlank() || password.length() < 4){
+            this.password="";
         }else{
-            this.password = new BCryptPasswordEncoder().encode(password);
+            this.password = new BCryptPasswordEncoder().encode(password.trim());
         }
-
     }
 
     public void clearPassBeforePopulatingForm(){
-        this.password=null;
+        this.password="";
     }
 
     @Override

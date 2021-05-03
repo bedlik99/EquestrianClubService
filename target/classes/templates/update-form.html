@@ -33,7 +33,7 @@
     <p style="text-align: center" class="h4 mb-4"><strong>Change your account data</strong></p>
 
     <div style="margin-left: 40%">
-        <form action="#" th:action="@{/save}"
+        <form action="#" th:action="@{/saveOrUpdate}"
               th:object="${theUser}" method="post">
 
             <!-- Add hidden form field to handle update -->
@@ -42,8 +42,22 @@
             <input type="text" th:field="*{userName}"
                    class="form-control mb-4 col-4" placeholder="Username">
 
+            <div th:if="${#fields.hasErrors('userName')}"
+                 style="margin-bottom: 25px;display: inline" class="text-danger">
+                <ul>
+                    <li th:each="err1 : ${#fields.errors('userName')}" th:text="'User name ' + ${err1}"></li>
+                </ul>
+            </div>
+
             <input type="text" th:field="*{password}"
                    class="form-control mb-4 col-4" placeholder="Password">
+
+            <div th:if="${#fields.hasErrors('password')}"
+                 style="margin-bottom: 25px" class="text-danger">
+                <ul>
+                    <li th:each="err2 : ${#fields.errors('password')}" th:text="'Password ' + ${err2}"></li>
+                </ul>
+            </div>
 
             <input type="text" th:field="*{firstName}"
                    class="form-control mb-4 col-4" placeholder="First Name">
@@ -54,10 +68,11 @@
             <input type="text" th:field="*{email}"
                    class="form-control mb-4 col-4" placeholder="Email">
 
-            <button style="margin-left: 80px" type="submit" class="btn btn-info col-2">Save</button>
+            <button style="margin-left: 80px"
+                    type="submit"
+                    class="btn btn-info col-2">Save</button>
 
         </form>
-
 
     </div>
 

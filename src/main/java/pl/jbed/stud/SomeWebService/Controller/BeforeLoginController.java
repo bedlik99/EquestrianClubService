@@ -15,6 +15,7 @@ import pl.jbed.stud.SomeWebService.Entity.UserCode;
 import pl.jbed.stud.SomeWebService.Service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 /**
  * UWAGA SPRAWDZ CZY BAZA DANYCH BEZ KROTKI ENABLED BEDZIE DZIALAC --> BĘDZIE :) !
@@ -33,6 +34,7 @@ public class BeforeLoginController {
 
     @RequestMapping(value = "/")
     public String showReactPage() {
+
         if (isAuthenticated()) {
             return "redirect:/logged";
         } else {
@@ -75,7 +77,7 @@ public class BeforeLoginController {
         UserCode theCode = userService.findCodeById(theUser.getId());
 
         if(theCode.getInviteCode() == null){
-            theCode.setInviteCode(generateCode());
+            theCode.setInviteCode(RandomStringUtils.random(6, characters));
             userService.updateUserCode(theCode);
         }
 
@@ -115,18 +117,31 @@ public class BeforeLoginController {
     }
 
 
-    @PostMapping("/save")
+    @PostMapping("/saveOrUpdate")
     public String saveCustomerData(@Valid @ModelAttribute("theUser") User theUser,
                                    BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            theUser.clearPassBeforePopulatingForm();
-            return "register-form";
-        } else {
-            userService.addFieldForUserCode();
-            userService.saveUser(theUser);
-            return "redirect:/greeting";
+        if(isAuthenticated()){
+            if (bindingResult.hasErrors()) {
+                theUser.clearPassBeforePopulatingForm();
+                return "update-form";
+            } else {
+                userService.saveUser(theUser);
+                return "redirect:/logged/update?userId=" +theUser.getId();
+            }
+        }else{
+            if (bindingResult.hasErrors()) {
+                theUser.clearPassBeforePopulatingForm();
+                return "register-form";
+            } else {
+
+                userService.saveUser(theUser);
+                userService.addFieldForUserCode(theUser);
+                return "redirect:/greeting";
+            }
         }
+
     }
+
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") int theId) {
@@ -134,11 +149,6 @@ public class BeforeLoginController {
         userService.deleteUser(theId);
 
         return "redirect:/greeting";
-    }
-
-
-    private String generateCode() {
-        return RandomStringUtils.random(6, characters);
     }
 
     private User getLoggedUser() {

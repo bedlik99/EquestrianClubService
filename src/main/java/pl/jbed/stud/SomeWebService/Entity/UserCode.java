@@ -19,8 +19,9 @@ public class UserCode {
 
     public UserCode(){}
 
-    public UserCode(String code){
+    public UserCode(String code, User user){
         this.inviteCode= code;
+        this.user = user;
     }
 
     public int getId() {

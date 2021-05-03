@@ -7,14 +7,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.jbed.stud.SomeWebService.DAO.Role.RoleRepo;
-import pl.jbed.stud.SomeWebService.DAO.User.UserRepository;
-import pl.jbed.stud.SomeWebService.DAO.UserCode.UserCodeRepository;
-import pl.jbed.stud.SomeWebService.DAO.UserRole.UserRoleRepo;
-import pl.jbed.stud.SomeWebService.Entity.User;
 import pl.jbed.stud.SomeWebService.Entity.Role;
+import pl.jbed.stud.SomeWebService.Entity.User;
 import pl.jbed.stud.SomeWebService.Entity.UserCode;
-
+import pl.jbed.stud.SomeWebService.Repositories.Role.RoleRepo;
+import pl.jbed.stud.SomeWebService.Repositories.User.UserRepository;
+import pl.jbed.stud.SomeWebService.Repositories.UserCode.UserCodeRepository;
+import pl.jbed.stud.SomeWebService.Repositories.UserRole.UserRoleRepo;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -49,6 +48,12 @@ public class UserServiceImpl implements UserService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional
+    public void clearUserCodeAfterLogout(String username) {
+        UserCode code = userCodeRepo.findById(userRepository.findByUserName(username).getId());
+        userCodeRepo.clearUserCodeAfterLogout(code);
+    }
 
     @Override
     @Transactional
@@ -69,14 +74,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void saveUser(User user) {
         if(user != null){
-
             if(user.getRoles() == null){
                 user.setRoles(Arrays.asList(roleRepository.findRoleByName("CUSTOMER")));
             }
             userRepository.save(user);
-
         }
-
     }
 
 
@@ -110,7 +112,6 @@ public class UserServiceImpl implements UserService {
         Optional<User> resultOfSearching = userRepository.findById(theId);
 
         if (resultOfSearching.isPresent()) {
-            System.out.println("Id of deleted user: " + theId);
             userRepository.deleteById(theId);
         } else {
             throw new RuntimeException("Did not find a customer with id: " + theId);
@@ -125,8 +126,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addFieldForUserCode() {
-        userCodeRepo.addFieldForUserCode();
+    public void addFieldForUserCode(User user) {
+
+        userCodeRepo.addFieldForUserCode(user);
     }
 
     @Override
