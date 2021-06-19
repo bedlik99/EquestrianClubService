@@ -16,8 +16,8 @@ You do not need to create connection with used database and change URLs so it sh
 ```
 java -jar EquestrianClubService.jar
 ```
-
-To see the content of H2 database:
+<hr>
+<h2>To see the content of H2 database:<h2>
 
 Go to database URL: http://localhost:8080/h2-console
 
