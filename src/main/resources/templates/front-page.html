@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Riding club</title>
+<!-- DLA index.html    <meta http-equiv="refresh" content="0; URL='/welcome'" />     -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/log_register_button.css}"/>
+
+</head>
+
+<body style="font-size: 30px;background-color: #ebe7e4">
+
+<div style="text-align: right; margin-right: 5px">
+
+    <div sec:authorize="isAuthenticated()">
+        <div style="margin-right: 5px;text-align: right;margin-top: 3px" >
+            <form th:action="@{/logout}" method="post">
+                <button class="big-button" type="submit" >Logout</button>
+            </form>
+        </div>
+    </div>
+
+    <div sec:authorize="isAnonymous()" style="font-size: 25px;font-family: Verdana;">
+        <div style="margin-top: 3px">
+            <a th:href="@{/login}">
+                <button style="margin-left: 45%;width: 6%" class="big-button">Sign in</button>
+            </a>
+        </div>
+        <div style="margin-top: 15px">
+            <a th:href="@{/register}">
+                <button style="margin-left: 45%;width: 6%" class="big-button">Register</button>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<div sec:authorize="isAuthenticated()" style="text-align: right;margin-right: 5px;margin-top: 8px">
+    <a th:href="@{/logged}">
+        <button class="big-button">Return to profile</button>
+    </a>
+</div>
+<br>
+<header class="masthead clear">
+
+    <div class="centered">
+        <div class="site-branding">
+            <h1 class="site-title">Welcome to the equestrian club</h1>
+        </div>
+        <!-- .site-title -->
+    </div>
+    <!-- .centered -->
+</header>
+<!-- .masthead -->
+<h3 style="text-align: center;font-family: 'JetBrains Mono'">Our offers include</h3><br>
+<main class="main-area">
+
+    <div class="centered">
+
+        <section class="cards">
+
+            <article class="card">
+                <a>
+                    <figure class="thumbnail">
+                        <img th:src="@{/css/ridingLesson.jpg}" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>All riding levels lessons</h2>
+                        <p>The lunge classes are intended for beginners who have their first contact
+                            with a horse, as well as for riders returning to classes after a long break.
+                            These lessons last half an hour. The horse is led by an instructor on a special rope,
+                            the so-called lunge. The rider is familiarized with the basic rules of horse riding,
+                            the horse's gaits, and the rules of proper seating.</p>
+                    </div>
+                    <!-- .card-content -->
+                </a>
+            </article>
+            <!-- .card -->
+
+            <article class="card">
+                <a>
+                    <figure class="thumbnail">
+                        <img th:src="@{/css/camp.jpg}" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Summer and winter camps</h2>
+                        <p>Horseback riding 2-3 hours a day Theoretical classes:
+                            horse riding and horse riding, preparation for the bronze exams
+                            and a silver PZJ equestrian badge, a friendly atmosphere, forest tours, bonfires, discos,
+                            shooting classes, great home-made food. The center is equipped with its own indoor arena.
+                            We are certified by the Polish Equestrian Federation.</p>
+                    </div>
+                    <!-- .card-content -->
+                </a>
+            </article>
+            <!-- .card -->
+
+            <article class="card">
+                <a>
+                    <figure class="thumbnail">
+                        <img th:src="@{/css/outdoor.jpg}" alt="meow">
+                    </figure>
+                    <div class="card-content">
+                        <h2>Outdoor Events</h2>
+                        <p>Events for a companies - approximately 200 people. (Tents are included).
+                            Provide tent details at time of booking. All
+                            tent placements must be discussed with the
+                            Supervisor or Lead Hand prior to an event. A
+                            Development Permit is required for all heated
+                            tent structures as per the Fire Prevention Officer.</p>
+                    </div>
+                    <!-- .card-content -->
+                </a>
+            </article>
+            <!-- .card -->
+
+        </section>
+        <!-- .cards -->
+
+    </div>
+    <!-- .centered -->
+
+</main>
+
+
+</body>
+</html>
