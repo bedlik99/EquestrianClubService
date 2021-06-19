@@ -1,4 +1,0 @@
-INSERT INTO user VALUES (1,'john@luv2code.com','John','Doe','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','john'), (2,'mary@luv2code.com','Mary','Public','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','mary'), (3,'susan@luv2code.com','Susan','Adams','$2a$04$czqQfg2CQOKkr6cl1/Q.EuhM5Eb0/I1w8BnK4o/y.t/oz9U53rwtm','susan'), (4,'troc.raf@pmail.com','Rafal', 'Trocki','$2a$10$/RyWIXF266CNf9EWEbLjsefeY/UC6/3m0ZOP.ueJM1/uIgW/vxEJW','rafix');
-INSERT INTO roles VALUES (1,'CUSTOMER'),(2,'MANAGER'),(3,'DEVELOPER');
-INSERT INTO user_role VALUES (1, 1), (2, 1),(2, 2),(3, 1),(3, 2),(3, 3),(4, 1);
-INSERT INTO user_code VALUES (1,null),(2,null),(3,null),(4,null);
