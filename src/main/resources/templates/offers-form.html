@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Club offers</title>
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/handleDatePicker.js}" async></script>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/user_option_button.css}"/>
+    <link rel="stylesheet" th:href="@{/css/offers.css}"/>
+    <link rel="stylesheet" th:href="@{/css/log_register_button.css}"/>
+
+</head>
+<body style="background-color: #ebe7e4">
+
+<div>
+    <div class="box" style="margin-left: 15px;margin-top: 5px;display: inline-block">
+        <a th:href="@{/logged}" class="btn btn-white btn-animation-1">Return to profile</a>
+    </div>
+    <div style="display: inline-block;float: right;margin-top: 5px;margin-right: 5px">
+        <form th:action="@{/logout}" method="post">
+            <button class="big-button" type="submit">Logout</button>
+        </form>
+    </div>
+</div>
+
+
+<div id="generic_price_table">
+    <div style="text-align: center;font-family: 'JetBrains Mono'">
+        <h1>Choose any offer you like</h1>
+        <h3>You need to pick the date when you would like to have it serviced</h3>
+    </div>
+    <br>
+    <section>
+        <div class="container">
+
+            <!--BLOCK ROW START-->
+            <div class="row">
+
+                <div class="col-md-4" th:each="offer:${offers}">
+                    <!--PRICE CONTENT START-->
+                    <div class="generic_content clearfix" th:if="${offers.indexOf(offer)<3}">
+
+                        <!--HEAD PRICE DETAIL START-->
+                        <div class="generic_head_price clearfix">
+
+                            <!--HEAD CONTENT START-->
+                            <div class="generic_head_content clearfix">
+
+                                <!--HEAD START-->
+                                <div class="head_bg"></div>
+                                <div class="head">
+                                    <span th:text="${offer.getName()}"></span>
+                                </div>
+                                <!--//HEAD END-->
+
+                            </div>
+                            <!--//HEAD CONTENT END-->
+
+                            <!--PRICE START-->
+                            <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">$</span>
+                                    <span class="currency" th:text="${offer.getCost()}"></span>
+                                    <span class="month">/each</span>
+                                </span>
+                            </div>
+                            <!--//PRICE END-->
+                        </div>
+                        <!--//HEAD PRICE DETAIL END-->
+
+                        <!--FEATURE LIST START-->
+                        <div class="generic_feature_list">
+                            <ul>
+                                <li>Description: <span th:text="${offer.getDescription()}"></span></li>
+                            </ul>
+                        </div>
+                        <!--//FEATURE LIST END-->
+
+                        <!--BUTTON START-->
+                        <hr>
+                        <form name="myForm" th:action="@{/reserve}" method="POST">
+
+                            <label for="timePicker1">Choose preferred date</label><br>
+                            <input id="timePicker1" th:type="datetime-local" name="reservation"
+                                   min="2021-01-01T00:01" max="2040-12-31T23:59"><br><br>
+
+                            <label>Choose employee<br><br>
+                                <select name="employee">
+                                    <option th:each="employee:${employees}"
+                                            th:text="${employee.getWebUser().getFirstName() +' '+employee.getWebUser().getLastName()}"
+                                            th:value="${employee.id}">
+                                    </option>
+                                </select>
+                            </label>
+                            <div class="generic_price_btn clearfix">
+                                <button th:id="${offer.id}" type="submit" name="offer" th:value="${offer.id}"
+                                        class="btn btn-success col-2">
+                                    Sign up
+                                </button>
+                            </div>
+                        </form>
+                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                            <hr>
+                            <div style="text-align: center">
+                                <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"
+                                        type="submit">Delete</button>
+                            </div>
+                        </form>
+                        <br>
+                        <!--//BUTTON END-->
+
+                    </div>
+
+                    <!--//PRICE CONTENT END-->
+                </div>
+
+            </div>
+
+            <!--BLOCK ROW START-->
+            <div class="row">
+
+                <div class="col-md-4" th:each="offer:${offers} ">
+                    <!--PRICE CONTENT START-->
+
+                    <div class="generic_content clearfix"
+                         th:if="${offers.indexOf(offer)>=3 && offers.indexOf(offer)<6}">
+
+                        <!--HEAD PRICE DETAIL START-->
+                        <div class="generic_head_price clearfix">
+
+                            <!--HEAD CONTENT START-->
+                            <div class="generic_head_content clearfix">
+
+                                <!--HEAD START-->
+                                <div class="head_bg"></div>
+                                <div class="head">
+                                    <span th:text="${offer.getName()}"></span>
+                                </div>
+                                <!--//HEAD END-->
+
+                            </div>
+                            <!--//HEAD CONTENT END-->
+
+                            <!--PRICE START-->
+                            <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">$</span>
+                                    <span class="currency" th:text="${offer.getCost()}"></span>
+                                    <span class="month">/each</span>
+                                </span>
+                            </div>
+                            <!--//PRICE END-->
+                        </div>
+                        <!--//HEAD PRICE DETAIL END-->
+
+                        <!--FEATURE LIST START-->
+                        <div class="generic_feature_list">
+                            <ul>
+                                <li>Description: <span th:text="${offer.getDescription()}"></span></li>
+                            </ul>
+                        </div>
+                        <!--//FEATURE LIST END-->
+
+                        <!--BUTTON START-->
+                        <hr>
+                        <form name="myForm" th:action="@{/reserve}" method="POST">
+
+                            <label for="timePicker2">Choose preferred date</label><br>
+                            <input id="timePicker2" th:type="datetime-local" name="reservation"
+                                   min="2021-01-01T00:01" max="2040-12-31T23:59"><br><br>
+
+                            <label>Choose employee<br><br>
+                                <select name="employee">
+                                    <option th:each="employee:${employees}"
+                                            th:text="${employee.getWebUser().getFirstName() +' '+employee.getWebUser().getLastName()}"
+                                            th:value="${employee.getId()}"></option>
+                                </select>
+                            </label>
+                            <div class="generic_price_btn clearfix">
+                                <button th:id="${offer.id}" type="submit" name="offer" th:value="${offer.id}"
+                                        class="btn btn-success col-2">
+                                    Sign up
+                                </button>
+
+                            </div>
+                        </form>
+                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                            <hr>
+                            <div style="text-align: center">
+                                <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"
+                                        type="submit">Delete</button>
+                            </div>
+                        </form>
+                        <br>
+                        <!--//BUTTON END-->
+
+                    </div>
+
+                    <!--//PRICE CONTENT END-->
+                </div>
+                <!--//BLOCK ROW END-->
+            </div>
+
+
+            <!--BLOCK ROW START-->
+            <div class="row">
+
+                <div class="col-md-4" th:each="offer:${offers} ">
+                    <!--PRICE CONTENT START-->
+
+                    <div class="generic_content clearfix"
+                         th:if="${offers.indexOf(offer)>=6 && offers.indexOf(offer)<9}">
+
+                        <!--HEAD PRICE DETAIL START-->
+                        <div class="generic_head_price clearfix">
+
+                            <!--HEAD CONTENT START-->
+                            <div class="generic_head_content clearfix">
+
+                                <!--HEAD START-->
+                                <div class="head_bg"></div>
+                                <div class="head">
+                                    <span th:text="${offer.getName()}"></span>
+                                </div>
+                                <!--//HEAD END-->
+
+                            </div>
+                            <!--//HEAD CONTENT END-->
+
+                            <!--PRICE START-->
+                            <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">$</span>
+                                    <span class="currency" th:text="${offer.getCost()}"></span>
+                                    <span class="month">/each</span>
+                                </span>
+                            </div>
+                            <!--//PRICE END-->
+                        </div>
+                        <!--//HEAD PRICE DETAIL END-->
+
+                        <!--FEATURE LIST START-->
+                        <div class="generic_feature_list">
+                            <ul>
+                                <li>Description: <span th:text="${offer.getDescription()}"></span></li>
+                            </ul>
+                        </div>
+                        <!--//FEATURE LIST END-->
+
+                        <!--BUTTON START-->
+                        <hr>
+                        <form name="myForm" th:action="@{/reserve}" method="POST">
+
+                            <label for="timePicker3">Choose preferred date</label><br>
+                            <input id="timePicker3" th:type="datetime-local" name="reservation"
+                                   min="2021-01-01T00:01" max="2040-12-31T23:59"><br><br>
+
+                            <label>Choose employee<br><br>
+                                <select name="employee">
+                                    <option th:each="employee:${employees}"
+                                            th:text="${employee.getWebUser().getFirstName() +' '+employee.getWebUser().getLastName()}"
+                                            th:value="${employee.getId()}"></option>
+                                </select>
+                            </label>
+                            <div class="generic_price_btn clearfix">
+                                <button th:id="${offer.id}" type="submit" name="offer" th:value="${offer.id}"
+                                        class="btn btn-success col-2">
+                                    Sign up
+                                </button>
+                            </div>
+                        </form>
+                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                            <hr>
+                            <div style="text-align: center">
+                                <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"
+                                        type="submit">Delete</button>
+                            </div>
+                        </form>
+                        <br>
+                        <!--//BUTTON END-->
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <br>
+
+        <div class="box" style="text-align: center">
+            <a th:href="@{/logged}" class="btn btn-white btn-animation-1">Return to profile</a>
+        </div>
+        <br>
+
+    </section>
+</div>
+
+
+</body>
+</html>

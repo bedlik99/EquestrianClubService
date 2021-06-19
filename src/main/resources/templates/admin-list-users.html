@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>System Users</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Reference Bootstrap files -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/list_users.css}"/>
+    <link rel="stylesheet" th:href="@{/css/user_option_button.css}"/>
+    <link rel="stylesheet" th:href="@{/css/log_register_button.css}"/>
+
+</head>
+<body style="background-color: #ebe7e4">
+
+<div style="display: inline-block;margin-left: 15px">
+    <a th:href="@{/logged}" class="btn btn-white btn-animation-1">Return to profile</a>
+</div>
+
+<div style="text-align: right;float:right;margin-right: 5px">
+    <form th:action="@{/logout}" method="post">
+        <button class="big-button" type="submit" >Logout</button>
+    </form>
+</div>
+
+<header>
+    <div style="text-align: center;font-family: 'JetBrains Mono'">
+        <h1>List of system users</h1>
+    </div>
+</header>
+<br>
+
+<div>
+    <section class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <div class="table-responsive">
+                        <table class="table user-list">
+                            <thead style="border: none">
+                            <tr>
+                                <th class="text-center"><span>User</span></th>
+                                <th class="text-center"><span>Username</span></th>
+                                <th class="text-center"><span>Email</span></th>
+                                <th class="text-center"><span>Delete User</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="systemUser:${systemUsers}">
+
+                                <td style="width: 25%">
+                                    <img th:src="@{/css/no-avatar.png}" alt="" src="">
+                                    <a class="user-link"
+                                       th:text="${systemUser.firstName + ' ' + systemUser.lastName}"></a>
+                                    <span class="user-subhead" th:text="${systemUser.roles}"></span>
+                                </td>
+
+                                <td style="text-align: center;width: 25%" th:text="${systemUser.username}"></td>
+
+                                <td style="text-align: center;width: 25%">
+                                    <a th:text="${systemUser.email}"></a>
+                                </td>
+
+                                <td style="text-align: center;width: 25%">
+                                    <form action="#" th:action="@{/removeUser}" method="POST">
+                                        <button style="background-color: #f6f6f6" th:name="userToDelete" th:value="${systemUser.id}">
+                                            <img th:src="@{/css/deleteUserIcon.jpg}" alt="" src=""/>
+                                        </button>
+                                    </form>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="box" style="text-align: center">
+        <a th:href="@{/logged}" class="btn btn-white btn-animation-1">Return to profile</a>
+    </div>
+    <br>
+</div>
+</body>
+</html>

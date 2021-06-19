@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/name_label.css}"/>
+    <link rel="stylesheet" th:href="@{/css/user_option_button.css}"/>
+    <link rel="stylesheet" th:href="@{/css/log_register_button.css}"/>
+
+</head>
+<body style="background-color: #ebe7e4">
+
+<div>
+    <div id="username" style="float: left">
+        <div style="font-family: 'JetBrains Mono';font-size: 18px;
+          margin-left: 5px;margin-top: 2px;text-align: center;">
+            <span>Logged as:</span>
+            <b><span sec:authentication="name">Username </span></b>
+        </div>
+    </div>
+
+    <div style="margin-right: 5px;text-align: right;margin-top: 8px" >
+        <form th:action="@{/logout}" method="post">
+<!--            <input class="btn btn-success" type="submit" value="Logout">-->
+            <button class="big-button" type="submit" >Logout</button>
+        </form>
+    </div>
+
+    <div style="text-align: right;margin-right: 5px;margin-top: 15px">
+        <a th:href="@{/logged/update(userId=${loggedUser.id})}">
+            <button  class="big-button">Update Profile</button>
+        </a>
+    </div>
+
+    <div style="text-align: center;margin-top: 50px">
+        <ul style="list-style-type:none;padding: 1em">
+            <li style="padding-bottom: 1em">
+                <div class="box">
+                    <a th:href="@{/logged/offers(userId=${loggedUser.id})}" class="btn btn-white btn-animation-1">Our Offers</a>
+                </div>
+            </li>
+            <li style="padding-bottom: 1em">
+                <div class="box">
+                    <a th:href="@{/logged/cart}" class="btn btn-white btn-animation-1">shopping cart</a>
+                </div>
+            </li>
+            <li sec:authorize="hasAuthority('EMPLOYEE')" style="padding-bottom: 1em">
+                <div class="box">
+                    <a th:href="@{/logged/tasks}" class="btn btn-white btn-animation-1">Current Reservations</a>
+                </div>
+            </li>
+            <li sec:authorize="hasAuthority('ADMIN')" style="padding-bottom: 1em">
+                <div class="box">
+                    <a th:href="@{/logged/systemUsers}" class="btn btn-white btn-animation-1">List all system users</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
