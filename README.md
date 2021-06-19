@@ -23,12 +23,11 @@ Go to database URL: http://localhost:8080/h2-console
 
 Fill the box like below:
 
-'Saved settings' and 'Setting name': Generic H2 (Embedded)
-'Driver class': org.h2.Driver
-JDBC URL: jdbc:h2:file:./data/database
-Credentials:
-
-User name: dev
-Password: dev
+'Saved settings' and 'Setting name': Generic H2 (Embedded)<br>
+'Driver class': org.h2.Driver <br>
+JDBC URL: jdbc:h2:file:./data/database<br>
+Credentials:<br>
+User name: dev <br>
+Password: dev <br>
 <hr>
 Thank you for researching my projects! 
