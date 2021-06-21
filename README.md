@@ -3,7 +3,7 @@ Web application. It will provide user authentication and authorization. The aim 
 Application was written in Java + Spring boot and use Thymealf for representing views.
 
 The fastest way to run application is downloading EquestrianClubService.jar file from DOWNLOAD_JAR_AND_RUN directory. 
-You need to have preinstaled Java on your machine. Prefered version is 11 but everything should work with the version 1.8 and above.
+You need to have preinstaled Java on your machine. Preferred version is 11 but everything should work with the version 1.8 and above.
 
 Application is working on local machine. Port 8080. --> localhost:8080. H2 Database is used - it runs in <b>client-server mode</b>. 
 Read more here: https://www.tutorialspoint.com/h2_database/h2_database_introduction.htm 
