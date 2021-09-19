@@ -32,7 +32,7 @@ Fill the box like below:
 
 'Saved settings' and 'Setting name': Generic H2 (Embedded)<br>
 'Driver class': org.h2.Driver <br>
-JDBC URL: jdbc:h2:file:./data/database<br>
+JDBC URL: jdbc:h2:file:{path_to_jar_file}/data/database<br>
 Credentials:<br>
 User name: dev <br>
 Password: dev <br>
