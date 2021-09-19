@@ -9,7 +9,7 @@ Application is working on local machine. Port 8080. --> localhost:8080. H2 Datab
 Read more here: https://www.tutorialspoint.com/h2_database/h2_database_introduction.htm 
 
 You do not need sql workbenches or data developer applications. <br>
-You do not need to create connection with used database and change URLs so it should work on your local machine.  
+You do not need to create connection with database and setup connections.
 
 <h2>Command to run application - jar file: </h2>
 
