@@ -18,27 +18,11 @@ java -jar EquestrianClubService.jar
 ```
 <hr>
 <h2>Users to sign in:</h2>
-- Clients:
-   * bruc12
-   * steve12
-   * angela12
-   * natala12
-   * wika12
-   * kacp12
-   * kasia12
-   * luki12
-   * ania12
-password: test123
+- Clients: bruc12/steve12/angela12/natala12/wika12/kacp12/kasia12/luki12/ania12 ; password: test123
 <br>
-- Employees:
-   * wera12
-   * marceg12
-   * bruc12
-password: test123
+- Employees: wera12/marceg12/bruc12 ; password: test123
 <br>
-- Admin:
-   * mark12
-password: admin12
+- Admin: mark12 ; password: admin12
 <hr>
 <h2>To see the content of H2 database:</h2>
 
