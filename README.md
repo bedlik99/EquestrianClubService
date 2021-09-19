@@ -16,7 +16,7 @@ You do not need to create connection with database and setup connections.
 ```
 java -jar EquestrianClubService.jar
 ```
-<h2>I have deployed application on Heroku. Check it here https://equestrian-club.herokuapp.com/ and see how it works.
+<h3>I have deployed application on Heroku. Check it here https://equestrian-club.herokuapp.com/ and see how it works.</h3>
 <hr>
 <h2>Users to sign in:</h2>
 - Clients: bruc12/steve12/angela12/natala12/wika12/kacp12/kasia12/luki12/ania12 ; password: test123
