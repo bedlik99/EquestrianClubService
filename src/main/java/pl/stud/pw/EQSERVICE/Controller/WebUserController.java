@@ -76,7 +76,7 @@ public class WebUserController {
         return "redirect:/welcome";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/logged/updateUserData")
     public String processUpdatingUserData(@Valid @ModelAttribute("theUser") WebUser theUser,
                                       BindingResult bindingResult) {
         if(isAuthenticated()){
@@ -141,7 +141,7 @@ public class WebUserController {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/removeUser")
+    @PostMapping("/logged/removeUser")
     public String removeUser(@RequestParam(name = "userToDelete") Long webUserId){
         WebUser webUser = webUserService.getUserById(webUserId);
         webUserService.deleteUser(webUser);

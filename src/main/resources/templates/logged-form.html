@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
 
 <head>
     <meta charset="UTF-8">
@@ -23,11 +24,15 @@
     <div id="username" style="float: left">
         <div style="font-family: 'JetBrains Mono';font-size: 18px;
           margin-left: 5px;margin-top: 2px;text-align: center;">
-            <span>Logged as:</span>
-            <b><span sec:authentication="name">Username </span></b>
+            <span>&nbsp;User:</span>
+            <b><span sec:authentication="name"></span></b>&nbsp;
+        </div><br>
+        <div style="margin-left: 5px" sec:authorize="hasAuthority('SUPER_USER')">
+            <form action="/h2-console">
+                <button type="submit" class="big-button">See Database</button>
+            </form>
         </div>
     </div>
-
     <div style="margin-right: 5px;text-align: right;margin-top: 8px" >
         <form th:action="@{/logout}" method="post">
 <!--            <input class="btn btn-success" type="submit" value="Logout">-->

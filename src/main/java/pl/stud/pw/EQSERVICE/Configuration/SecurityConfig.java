@@ -10,17 +10,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.stud.pw.EQSERVICE.Service.WebUserService;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final WebUserService webUserService;
-    private final DataSource dataSource;
 
-    public SecurityConfig(DataSource dataSource, WebUserService webUserService){
-        this.dataSource = dataSource;
+    public SecurityConfig(WebUserService webUserService){
         this.webUserService = webUserService;
     }
 
@@ -50,11 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
 
         http.authorizeRequests()
                 .antMatchers("/login").authenticated()
                 .antMatchers("/logged").authenticated()
                 .antMatchers("/logged/*").authenticated()
+                .antMatchers("/h2-console/**").hasAuthority("SUPER_USER")
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -66,8 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll();
-
-
     }
 
     /**
@@ -78,9 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * or we can set security to ignore h2 endpoint in configure(WebSecurity web) method. I took this approach.
      */
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2-console/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers("/h2-console/**");
+//    }
 
 }

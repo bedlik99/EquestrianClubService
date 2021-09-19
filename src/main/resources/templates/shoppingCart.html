@@ -35,7 +35,7 @@
     <section id="cart">
         <article class="product" th:each="reservation:${reservations}">
             <div>
-                <form action="#" th:action="@{/removeReservation}" method="POST">
+                <form action="#" th:action="@{/logged/removeReservation}" method="POST">
                     <header style="text-align: center">
                         <button name="reservationId" th:value="${reservation.getId()}" class="remove"
                                 style="padding: 0;border-color: white">

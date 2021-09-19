@@ -85,7 +85,7 @@
 
                         <!--BUTTON START-->
                         <hr>
-                        <form name="myForm" th:action="@{/reserve}" method="POST">
+                        <form name="myForm" th:action="@{/logged/reserve}" method="POST">
 
                             <label for="timePicker1">Choose preferred date</label><br>
                             <input id="timePicker1" th:type="datetime-local" name="reservation"
@@ -106,7 +106,7 @@
                                 </button>
                             </div>
                         </form>
-                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                        <form th:action="@{/logged/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
                             <hr>
                             <div style="text-align: center">
                                 <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"
@@ -170,7 +170,7 @@
 
                         <!--BUTTON START-->
                         <hr>
-                        <form name="myForm" th:action="@{/reserve}" method="POST">
+                        <form name="myForm" th:action="@{/logged/reserve}" method="POST">
 
                             <label for="timePicker2">Choose preferred date</label><br>
                             <input id="timePicker2" th:type="datetime-local" name="reservation"
@@ -191,7 +191,7 @@
 
                             </div>
                         </form>
-                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                        <form th:action="@{/logged/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
                             <hr>
                             <div style="text-align: center">
                                 <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"
@@ -256,7 +256,7 @@
 
                         <!--BUTTON START-->
                         <hr>
-                        <form name="myForm" th:action="@{/reserve}" method="POST">
+                        <form name="myForm" th:action="@{/logged/reserve}" method="POST">
 
                             <label for="timePicker3">Choose preferred date</label><br>
                             <input id="timePicker3" th:type="datetime-local" name="reservation"
@@ -276,7 +276,7 @@
                                 </button>
                             </div>
                         </form>
-                        <form th:action="@{/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
+                        <form th:action="@{/logged/removeOffer}" sec:authorize="hasAuthority('ADMIN')" method="POST">
                             <hr>
                             <div style="text-align: center">
                                 <button name="deleteOfferId" th:value="${offer.id}" class="btn btn-danger"

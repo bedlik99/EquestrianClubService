@@ -45,13 +45,13 @@
         </a>
         <div th:if="${reserInfo.status.equals('Accepted')}">
             <br>
-            <form th:action="@{/declineAppointment}" method="POST">
+            <form th:action="@{/logged/declineAppointment}" method="POST">
                 <button name="declineServiceId" th:value="${reserInfo.reservationId}" class="btn btn-danger">Decline service and remove reservation</button>
             </form><br>
         </div>
         <div th:if="${reserInfo.status.equals('Pending')}">
             <br>
-            <form th:action="@{/acceptAppointment}" method="POST">
+            <form th:action="@{/logged/acceptAppointment}" method="POST">
                 <button name="acceptServiceId" th:value="${reserInfo.reservationId}" class="btn btn-info">Accept service</button>
             </form><br>
         </div>
