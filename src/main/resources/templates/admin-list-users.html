@@ -68,7 +68,7 @@
                                 </td>
 
                                 <td style="text-align: center;width: 25%">
-                                    <form action="#" th:action="@{/removeUser}" method="POST">
+                                    <form action="#" th:action="@{/logged/removeUser}" method="POST">
                                         <button style="background-color: #f6f6f6" th:name="userToDelete" th:value="${systemUser.id}">
                                             <img th:src="@{/css/deleteUserIcon.jpg}" alt="" src=""/>
                                         </button>

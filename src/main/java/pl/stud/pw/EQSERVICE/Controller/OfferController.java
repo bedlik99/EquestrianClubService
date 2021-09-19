@@ -26,7 +26,7 @@ public class OfferController {
         this.webUserService = webUserService;
     }
 
-    @PostMapping("/reserve")
+    @PostMapping("/logged/reserve")
     public String chooseOffer(@RequestParam(name = "offer") Long offerId,
                               @RequestParam(name = "reservation") String offerDate,
                               @RequestParam(name = "employee") Long employeeId){
@@ -40,14 +40,14 @@ public class OfferController {
         return "redirect:/logged/offers";
     }
 
-    @PostMapping("/removeReservation")
+    @PostMapping("/logged/removeReservation")
     public String removeReservation(@RequestParam(name = "reservationId") Long reservationId){
         offerService.deleteReservation(offerService.findOfferReservationById(reservationId));
         return "redirect:/logged/cart";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/removeOffer")
+    @PostMapping("/logged/removeOffer")
     public String removeOffer(@RequestParam(name = "deleteOfferId") Long offerId){
         Offer offerToDelete = offerService.findOfferById(offerId);
         offerService.removeOffer(offerToDelete);
@@ -55,7 +55,7 @@ public class OfferController {
     }
 
     @PreAuthorize("hasAuthority('EMPLOYEE')")
-    @PostMapping("/declineAppointment")
+    @PostMapping("/logged/declineAppointment")
     public String declineAppoinment(@RequestParam(name = "declineServiceId") Long id){
         OfferReservation offerReservation = offerService.findOfferReservationById(id);
         offerService.deleteReservation(offerReservation);
@@ -63,7 +63,7 @@ public class OfferController {
     }
 
     @PreAuthorize("hasAuthority('EMPLOYEE')")
-    @PostMapping("/acceptAppointment")
+    @PostMapping("/logged/acceptAppointment")
     public String acceptAppoinment(@RequestParam(name = "acceptServiceId") Long id){
         OfferReservation offerReservation = offerService.findOfferReservationById(id);
         offerService.updateReservationStatus(offerReservation);

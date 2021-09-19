@@ -146,7 +146,7 @@ public class WebUserService implements UserDetailsService {
     private boolean isAdmin(WebUser webUser){
         return webUser.getRoles()
                 .stream()
-                .noneMatch(role -> role.getRoleName().equals("ADMIN"));
+                .noneMatch(role -> role.getRoleName().equals("ADMIN") || role.getRoleName().equals("SUPER_USER"));
     }
 
     private void refreshAuthenticationCredentials(WebUser user){

@@ -30,7 +30,7 @@
     <p style="text-align: center;color: black" class="h4 mb-4"><strong>Change your account data</strong></p>
 
     <div style="margin-left: 40%">
-        <form action="#" th:action="@{/update}"
+        <form action="#" th:action="@{/logged/updateUserData}"
               th:object="${theUser}" method="post">
 
             <!-- Add hidden form field to handle update -->
