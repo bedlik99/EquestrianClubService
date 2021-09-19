@@ -17,6 +17,29 @@ You do not need to create connection with used database and change URLs so it sh
 java -jar EquestrianClubService.jar
 ```
 <hr>
+<h2>Users to sign in:</h2>
+- Clients:
+   * bruc12
+   * steve12
+   * angela12
+   * natala12
+   * wika12
+   * kacp12
+   * kasia12
+   * luki12
+   * ania12
+password: test123
+<br>
+- Employees:
+   * wera12
+   * marceg12
+   * bruc12
+password: test123
+<br>
+- Admin:
+   * mark12
+password: admin12
+<hr>
 <h2>To see the content of H2 database:</h2>
 
 Go to database URL: http://localhost:8080/h2-console
@@ -29,5 +52,6 @@ JDBC URL: jdbc:h2:file:./data/database<br>
 Credentials:<br>
 User name: dev <br>
 Password: dev <br>
+
 <hr>
 Thank you for researching my projects! 
