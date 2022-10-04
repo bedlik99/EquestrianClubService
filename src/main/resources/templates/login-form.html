@@ -19,17 +19,16 @@
 <body style="background-color: #ebe7e4">
 
 
-<div style="margin-block-start: 50px">
+<div style="margin: auto">
 
-    <div id="loginbox" style="margin-top: 50px;margin-left:35%;width: 30%"
+    <div id="loginbox" style="margin: auto;min-width: 100%; text-align: center"
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
-        <div class="panel panel-info">
+        <div class="panel panel-info" style="min-width:40vmax;max-width: 50%; margin: auto; margin-top: 10%">
 
             <div class="panel-heading">
                 <div class="panel-title">Sign In</div>
             </div>
-
 
             <form th:action="@{/authenticateUser}" method="POST" class="form-horizontal">
 
@@ -66,34 +65,30 @@
                 </div>
 
 
-
                 <!-- Login/Submit Button -->
-                <div style="margin-top: 10px;margin-left: 13px" class="form-group">
-                    <div class="col-sm-6 controls">
-                        <button style="width: 200%" type="submit" class="btn btn-success">Login</button>
-                    </div>
+                <div style="margin-bottom: 1em" class="form-group">
+                    <button style="width: 30%; min-height: 3em" type="submit" class="btn btn-success">Login</button>
                 </div>
 
             </form>
 
             <div style="text-align: center;margin-bottom: 5px">
                 <a th:href="@{/register}" class="btn btn-primary"
-                   role="button" aria-pressed="true">
-                    Register
+                   style="min-height: 3em; min-width: 30%; padding-top: 1.5%"
+                   role="button" aria-pressed="true">Register
                 </a>
             </div>
 
-        </div>
-
-        <div style="text-align: center">
-            <a th:href="@{/welcome}">Back to Front Page</a>
+            <hr/>
+            <div style="text-align: center">
+                <a th:href="@{/welcome}">Back to Front Page</a>
+            </div>
         </div>
 
 
     </div>
 
 </div>
-
 
 
 </body>

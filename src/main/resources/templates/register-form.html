@@ -23,13 +23,14 @@
 
     <p style="text-align: center;color: black" class="h4 mb-4"><strong>Create Account</strong></p>
 
-    <div style="margin-left: 40%">
+    <div style="margin: auto; text-align: center">
         <form action="#" th:action="@{/save}" th:object="${theUser}" method="POST">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}"/>
 
-            <input id="username" type="text" th:field="*{username}" class="form-control mb-4 col-4" placeholder="Username">
+            <input id="username" type="text" th:field="*{username}" class="form-control mb-4 col-4"
+                   style="min-width: 50%; margin: auto" placeholder="Username">
 
             <div th:if="${#fields.hasErrors('username')}" style="margin-bottom: 25px;display: inline" class="text-danger">
                 <ul>
@@ -38,7 +39,7 @@
             </div>
 
             <input id="pass" type="text" th:field="*{password}"
-                   class="form-control mb-4 col-4" placeholder="Password"/>
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Password"/>
 
             <div th:if="${#fields.hasErrors('password')}" style="margin-bottom: 25px" class="text-danger">
                 <ul>
@@ -47,10 +48,10 @@
             </div>
 
             <input type="text" th:field="*{firstName}"
-                   class="form-control mb-4 col-4" placeholder="First Name"/>
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="First Name"/>
 
             <input type="text" th:field="*{lastName}"
-                   class="form-control mb-4 col-4" placeholder="Last Name"/>
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Last Name"/>
 
             <div th:if="${#fields.hasErrors('email')}" style="margin-bottom: 25px" class="text-danger">
                 <ul>
@@ -59,9 +60,9 @@
             </div>
 
             <input id="email" type="text" th:field="*{email}"
-                   class="form-control mb-4 col-4" placeholder="Email"/>
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Email"/>
 
-            <button style="margin-left: 80px" type="submit" class="btn btn-info col-2">
+            <button style="min-width: 5em; margin: auto" type="submit" class="btn btn-info col-2" >
                 Save
             </button>
         </form>

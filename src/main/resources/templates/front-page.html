@@ -4,7 +4,7 @@
 <head>
     <title>Riding club</title>
 <!-- DLA index.html    <meta http-equiv="refresh" content="0; URL='/welcome'" />     -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -31,12 +31,12 @@
     <div sec:authorize="isAnonymous()" style="font-size: 25px;font-family: Verdana;">
         <div style="margin-top: 3px">
             <a th:href="@{/login}">
-                <button style="margin-left: 45%;width: 6%" class="big-button">Sign in</button>
+                <button style="margin: auto;min-width: 10vmax" class="big-button">Sign in</button>
             </a>
         </div>
         <div style="margin-top: 15px">
             <a th:href="@{/register}">
-                <button style="margin-left: 45%;width: 6%" class="big-button">Register</button>
+                <button style="mmargin: auto;min-width: 10vmax" class="big-button">Register</button>
             </a>
         </div>
     </div>
