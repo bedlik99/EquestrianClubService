@@ -18,15 +18,16 @@
 </head>
 <body style="background-color: #ebe7e4">
 
-<div style="display: inline-block;margin-left: 15px">
-    <a th:href="@{/logged}" class="btn btn-white btn-animation-1">Return to profile</a>
+<div style="display: inline-block;width: 100%">
+    <a th:href="@{/logged}" class="btn btn-white btn-animation-1" style="max-width: 50%; font-size: 12px">
+        Return to profile</a>
+    <div style="text-align: right;float:right;margin-right: 5px">
+        <form th:action="@{/logout}" method="post">
+            <button class="big-button" type="submit">Logout</button>
+        </form>
+    </div>
 </div>
 
-<div style="text-align: right;float:right;margin-right: 5px">
-    <form th:action="@{/logout}" method="post">
-        <button class="big-button" type="submit" >Logout</button>
-    </form>
-</div>
 
 <header>
     <div style="text-align: center;font-family: 'JetBrains Mono'">
@@ -69,7 +70,8 @@
 
                                 <td style="text-align: center;width: 25%">
                                     <form action="#" th:action="@{/logged/removeUser}" method="POST">
-                                        <button style="background-color: #f6f6f6" th:name="userToDelete" th:value="${systemUser.id}">
+                                        <button style="background-color: #f6f6f6" th:name="userToDelete"
+                                                th:value="${systemUser.id}">
                                             <img th:src="@{/css/deleteUserIcon.jpg}" alt="" src=""/>
                                         </button>
                                     </form>
