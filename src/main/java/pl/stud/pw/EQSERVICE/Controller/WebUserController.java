@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.stud.pw.EQSERVICE.DTO.WebUserDTO;
 import pl.stud.pw.EQSERVICE.Entity.Employee;
 import pl.stud.pw.EQSERVICE.Entity.WebUser;
 import pl.stud.pw.EQSERVICE.Service.OfferService;
@@ -78,18 +79,19 @@ public class WebUserController {
     }
 
     @PostMapping("/logged/updateUserData")
-    public String processUpdatingUserData(@Valid @ModelAttribute("theUser") WebUser theUser,
+    public String processUpdatingUserData(@Valid @ModelAttribute("webUserDTO") WebUserDTO webUserDTO,
                                           BindingResult bindingResult) {
+        WebUser loggedUser = webUserService.getLoggedUser();
         if (isAuthenticated()) {
             if (!bindingResult.hasFieldErrors()) {
-                if (webUserService.isUpdateForFieldsAvailable(theUser)) {
-                    webUserService.updateWebUserData(theUser);
-                    return "redirect:/logged/update?userId=" + theUser.getId();
+                if (webUserService.isUpdateForFieldsAvailable(loggedUser, webUserDTO)) {
+                    webUserService.updateWebUserData(webUserDTO);
+                    return "redirect:/logged/update?userId=" + loggedUser.getId();
                 }
-                theUser.fillFieldsWithLoggedUserDetails(webUserService.getLoggedUser());
+                webUserDTO.fillFieldsWithLoggedUserDetails(loggedUser);
                 return "update-form";
             }
-            theUser.clearPassBeforePopulatingForm();
+            webUserDTO.clearPassBeforePopulatingForm();
             return "update-form";
         }
         return "front-page";
@@ -105,8 +107,10 @@ public class WebUserController {
     @GetMapping("/logged/update")
     public String showUpdateForm(@RequestParam("userId") Long theId, Model theModel) {
         WebUser webUser = webUserService.findUserAndClearPassForm(theId);
+        WebUserDTO webUserDTO = WebUserDTO.createWebUserDTO(webUser);
+
         if (webUser != null) {
-            theModel.addAttribute("theUser", webUser);
+            theModel.addAttribute("webUserDTO", webUserDTO);
             return "update-form";
         }
         return "redirect:/logged";

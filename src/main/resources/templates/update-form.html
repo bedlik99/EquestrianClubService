@@ -18,64 +18,59 @@
 <body style="background-color: #ebe7e4">
 
 <div th:class="leftTop">
-    <div style="margin-right: 5px;text-align: right;margin-top: 3px"  >
+    <div style="margin-right: 5px;text-align: right;margin-top: 3px">
         <form th:action="@{/logout}" method="post">
-            <button class="big-button" type="submit" style="max-width: 90px;max-height: 50px;font-size: 12px;margin-top: 5px">Logout</button>
+            <button class="big-button" type="submit"
+                    style="max-width: 90px;max-height: 50px;font-size: 12px;margin-top: 5px">Logout
+            </button>
         </form>
     </div>
 
-    <h1 style="text-align: center">Updating Data</h1>
+    <h1 style="text-align: center;margin-top: 3%">Updating Data</h1>
     <hr>
 
     <p style="text-align: center;color: black" class="h4 mb-4"><strong>Change your account data</strong></p>
 
-    <div style="margin-left: 40%">
+    <div style="margin: auto">
         <form action="#" th:action="@{/logged/updateUserData}"
-              th:object="${theUser}" method="post">
-
-            <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}"/>
+              th:object="${webUserDTO}" method="post">
 
             <input id="username" type="text" th:field="*{username}"
-                   class="form-control mb-4 col-4" placeholder="Username">
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Username">
 
             <div th:if="${#fields.hasErrors('username')}"
-                 style="margin-bottom: 25px;display: inline" class="text-danger">
+                 style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err1 : ${#fields.errors('username')}" th:text="'User name ' + ${err1}"></li>
                 </ul>
             </div>
 
             <input id="pass" type="text" th:field="*{password}"
-                   class="form-control mb-4 col-4" placeholder="Password">
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Password">
 
-            <div th:if="${#fields.hasErrors('password')}"
-                 style="margin-bottom: 25px" class="text-danger">
+            <div th:if="${#fields.hasErrors('password')}" style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err2 : ${#fields.errors('password')}" th:text="'Password ' + ${err2}"></li>
                 </ul>
             </div>
 
             <input type="text" th:field="*{firstName}"
-                   class="form-control mb-4 col-4" placeholder="First Name">
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="First Name">
 
             <input type="text" th:field="*{lastName}"
-                   class="form-control mb-4 col-4" placeholder="Last Name">
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Last Name">
 
             <input id="email" type="text" th:field="*{email}"
-                   class="form-control mb-4 col-4" placeholder="Email">
+                   class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Email">
 
             <div th:if="${#fields.hasErrors('email')}"
-                 style="margin-bottom: 25px" class="text-danger">
+                 style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err3 : ${#fields.errors('email')}" th:text="'Email ' + ${err3}"></li>
                 </ul>
             </div>
 
-            <div style="margin-left: 80px">
-                <button type="submit" class="btn btn-info col-2">Update</button>
-            </div>
-
+            <button type="submit" class="btn btn-info col-2" style="min-width: 30%; margin: auto;margin-left: 35%;">Update</button>
 
         </form>
 

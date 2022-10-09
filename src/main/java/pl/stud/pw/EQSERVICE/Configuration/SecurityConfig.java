@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login").authenticated()
                 .antMatchers("/logged").authenticated()
-                .antMatchers("/logged/*").authenticated()
+                .antMatchers("/logged/**").authenticated()
                 .antMatchers("/h2-console/**").hasAuthority("SUPER_USER")
                 .and()
                 .formLogin()

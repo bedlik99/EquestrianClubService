@@ -26,13 +26,10 @@
     <div style="margin: auto; text-align: center">
         <form action="#" th:action="@{/save}" th:object="${theUser}" method="POST">
 
-            <!-- Add hidden form field to handle update -->
-            <input type="hidden" th:field="*{id}"/>
-
             <input id="username" type="text" th:field="*{username}" class="form-control mb-4 col-4"
                    style="min-width: 50%; margin: auto" placeholder="Username">
 
-            <div th:if="${#fields.hasErrors('username')}" style="margin-bottom: 25px;display: inline" class="text-danger">
+            <div th:if="${#fields.hasErrors('username')}" style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err1 : ${#fields.errors('username')}" th:text="'Username ' + ${err1}"></li>
                 </ul>
@@ -41,7 +38,7 @@
             <input id="pass" type="text" th:field="*{password}"
                    class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Password"/>
 
-            <div th:if="${#fields.hasErrors('password')}" style="margin-bottom: 25px" class="text-danger">
+            <div th:if="${#fields.hasErrors('password')}" style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err2 : ${#fields.errors('password')}" th:text="'Password ' + ${err2}"></li>
                 </ul>
@@ -53,7 +50,7 @@
             <input type="text" th:field="*{lastName}"
                    class="form-control mb-4 col-4" style="min-width: 50%; margin: auto" placeholder="Last Name"/>
 
-            <div th:if="${#fields.hasErrors('email')}" style="margin-bottom: 25px" class="text-danger">
+            <div th:if="${#fields.hasErrors('email')}" style="margin: auto;text-align: left; max-width: 50%" class="text-danger">
                 <ul>
                     <li th:each="err3 : ${#fields.errors('email')}" th:text="'Email ' + ${err3}"></li>
                 </ul>

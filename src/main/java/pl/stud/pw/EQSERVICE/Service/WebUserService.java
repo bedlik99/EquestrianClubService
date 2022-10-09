@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.stud.pw.EQSERVICE.DTO.WebUserDTO;
 import pl.stud.pw.EQSERVICE.Entity.Employee;
 import pl.stud.pw.EQSERVICE.Entity.Role;
 import pl.stud.pw.EQSERVICE.Entity.WebUser;
@@ -43,7 +44,7 @@ public class WebUserService implements UserDetailsService {
     }
 
     @Transactional
-    public void saveWebUser(WebUser theUser){
+    public void saveWebUser(WebUser theUser) {
 
         if (theUser != null) {
             if (theUser.getRoles() == null || theUser.getRoles().isEmpty()) {
@@ -53,18 +54,18 @@ public class WebUserService implements UserDetailsService {
         }
     }
 
-    public boolean isUsernameOrEmailDuplicated(WebUser theUser){
+    public boolean isUsernameOrEmailDuplicated(WebUser theUser) {
         return webUserRepository.findWebUserByUsername(theUser.getUsername()) != null
                 || webUserRepository.findWebUserByEmail(theUser.getEmail()) != null;
     }
 
-    public boolean isUpdateForFieldsAvailable(WebUser theUser){
-        String loggedUsername = getLoggedUser().getUsername();
-        String loggedEmail = getLoggedUser().getEmail();
+    public boolean isUpdateForFieldsAvailable(WebUser loggedUser, WebUserDTO theUser) {
+        String loggedUsername = loggedUser.getUsername();
+        String loggedEmail = loggedUser.getEmail();
         String modelUsername = theUser.getUsername();
         String modelEmail = theUser.getEmail();
 
-        if(!loggedUsername.equals(modelUsername) && webUserRepository.findWebUserByUsername(modelUsername) != null){
+        if (!loggedUsername.equals(modelUsername) && webUserRepository.findWebUserByUsername(modelUsername) != null) {
             return false;
         }
 
@@ -108,9 +109,17 @@ public class WebUserService implements UserDetailsService {
     }
 
     @Transactional
-    public void updateWebUserData(WebUser theUser) {
+    public Long updateWebUserData(WebUserDTO theUserData) {
+        WebUser theUser = getLoggedUser();
+        theUser.setUsername(theUserData.getUsername());
+        theUser.setPassword(theUserData.getPassword());
+        theUser.setFirstName(theUserData.getFirstName());
+        theUser.setLastName(theUserData.getLastName());
+        theUser.setEmail(theUserData.getEmail());
+
         webUserExtraSQLRepository.updateUserInformation(theUser);
         refreshAuthenticationCredentials(theUser);
+        return theUser.getId();
     }
 
     @Transactional
@@ -126,30 +135,30 @@ public class WebUserService implements UserDetailsService {
     }
 
     @Transactional
-    public List<Employee> getEmployees(){
+    public List<Employee> getEmployees() {
         return employeeRepository.findAll();
     }
 
-    public Employee getEmployeeById(Long id){
+    public Employee getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         return employee.orElse(null);
     }
 
     @Transactional
-    public List<WebUser> getWebSystemUsers(){
+    public List<WebUser> getWebSystemUsers() {
         return webUserRepository.findAll()
                 .stream()
                 .filter(this::isAdmin)
                 .collect(Collectors.toList());
     }
 
-    private boolean isAdmin(WebUser webUser){
+    private boolean isAdmin(WebUser webUser) {
         return webUser.getRoles()
                 .stream()
                 .noneMatch(role -> role.getRoleName().equals("ADMIN") || role.getRoleName().equals("SUPER_USER"));
     }
 
-    private void refreshAuthenticationCredentials(WebUser user){
+    private void refreshAuthenticationCredentials(WebUser user) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<GrantedAuthority> updatedAuthorities = new ArrayList<>(auth.getAuthorities());
         Authentication newAuth = new UsernamePasswordAuthenticationToken(user.getUsername(),
@@ -161,9 +170,9 @@ public class WebUserService implements UserDetailsService {
     public void deleteUser(WebUser webUser) {
         if (webUser != null) {
             offerReservationRepository.deleteAllByWebUser(webUser);
-            if(webUser.getEmployee()!=null){
+            if (webUser.getEmployee() != null) {
                 Optional<Employee> employee = employeeRepository.findById(webUser.getEmployee().getId());
-                if(employee.isPresent()){
+                if (employee.isPresent()) {
                     offerReservationRepository.deleteAllByEmployee(employee.get());
                     employeeRepository.delete(employee.get());
                 }
